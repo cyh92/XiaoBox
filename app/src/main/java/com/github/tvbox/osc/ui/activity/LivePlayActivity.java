@@ -4,6 +4,7 @@ import static xyz.doikki.videoplayer.util.PlayerUtils.stringForTimeVod;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,6 +48,8 @@ import com.github.tvbox.osc.ui.adapter.LiveEpgAdapter;
 import com.github.tvbox.osc.ui.adapter.LiveEpgDateAdapter;
 import com.github.tvbox.osc.ui.adapter.LiveSettingGroupAdapter;
 import com.github.tvbox.osc.ui.adapter.LiveSettingItemAdapter;
+import com.github.tvbox.osc.ui.dialog.AboutDialog;
+import com.github.tvbox.osc.ui.dialog.ApiDialog;
 import com.github.tvbox.osc.ui.dialog.ApiHistoryDialog;
 import com.github.tvbox.osc.ui.dialog.LivePasswordDialog;
 import com.github.tvbox.osc.util.EpgUtil;
@@ -205,8 +208,8 @@ public class LivePlayActivity extends BaseActivity {
         mTotalTime = findViewById(R.id.total_time);
 
         // Center Back Button
-        mBack = findViewById(R.id.tvBackButton);
-        mBack.setVisibility(View.INVISIBLE);
+//        mBack = findViewById(R.id.tvBackButton);
+//        mBack.setVisibility(View.INVISIBLE);
 
         // Bottom Info
         tvBottomLayout = findViewById(R.id.tvBottomLayout);
@@ -298,12 +301,12 @@ public class LivePlayActivity extends BaseActivity {
             }
         });
         // Button: BACK click to go back to previous page -------------------
-        mBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+//        mBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//            }
+//        });
     }
 
     boolean PiPON = Hawk.get(HawkConfig.PIC_IN_PIC, false);
@@ -366,7 +369,7 @@ public class LivePlayActivity extends BaseActivity {
             selectedChannelNumber = 0;
         }
     };
-
+    //数字选台
     private void numericKeyDown(int digit) {
         int maxChannelIndex = getLiveChannels(currentChannelGroupIndex).size();
         selectedChannelNumber = selectedChannelNumber * 10 + digit;
@@ -390,16 +393,18 @@ public class LivePlayActivity extends BaseActivity {
             } else if (!isListOrSettingLayoutVisible()) {
                 switch (keyCode) {
                     case KeyEvent.KEYCODE_DPAD_UP:
+                    case KeyEvent.KEYCODE_CHANNEL_UP:
                         if (Hawk.get(HawkConfig.LIVE_CHANNEL_REVERSE, false))
-                            playNext();
-                        else
                             playPrevious();
+                        else
+                            playNext();
                         break;
                     case KeyEvent.KEYCODE_DPAD_DOWN:
+                    case KeyEvent.KEYCODE_CHANNEL_DOWN:
                         if (Hawk.get(HawkConfig.LIVE_CHANNEL_REVERSE, false))
-                            playPrevious();
-                        else
                             playNext();
+                        else
+                            playPrevious();
                         break;
                     case KeyEvent.KEYCODE_DPAD_LEFT:
                         // takagen99 : To cater for newer Android w no Menu button
@@ -497,7 +502,7 @@ public class LivePlayActivity extends BaseActivity {
     }
 
     private void showChannelList() {
-        mBack.setVisibility(View.INVISIBLE);
+//        mBack.setVisibility(View.INVISIBLE);
         if (tvBottomLayout.getVisibility() == View.VISIBLE) {
             mHandler.removeCallbacks(mHideChannelInfoRun);
             mHandler.post(mHideChannelInfoRun);
@@ -515,7 +520,7 @@ public class LivePlayActivity extends BaseActivity {
             mHandler.postDelayed(mFocusCurrentChannelAndShowChannelList, 200);
             mHandler.post(tv_sys_timeRunnable);
         } else {
-            mBack.setVisibility(View.INVISIBLE);
+//            mBack.setVisibility(View.INVISIBLE);
             mHandler.removeCallbacks(mHideChannelListRun);
             mHandler.post(mHideChannelListRun);
             mHandler.removeCallbacks(tv_sys_timeRunnable);
@@ -603,7 +608,8 @@ public class LivePlayActivity extends BaseActivity {
     private void showChannelInfo() {
         // takagen99: Check if Touch Screen, show back button
         if (supportsTouch()) {
-            mBack.setVisibility(View.VISIBLE);
+//            mBack.setVisibility(View.VISIBLE);
+            System.out.print("触摸屏");
         }
 
         if (tvBottomLayout.getVisibility() == View.GONE || tvBottomLayout.getVisibility() == View.INVISIBLE) {
@@ -625,7 +631,7 @@ public class LivePlayActivity extends BaseActivity {
     private final Runnable mHideChannelInfoRun = new Runnable() {
         @Override
         public void run() {
-            mBack.setVisibility(View.INVISIBLE);
+//            mBack.setVisibility(View.INVISIBLE);
             if (tvBottomLayout.getVisibility() == View.VISIBLE) {
                 tvBottomLayout.animate()
                         .alpha(0.0f)
@@ -654,7 +660,7 @@ public class LivePlayActivity extends BaseActivity {
         } else if (tvBottomLayout.getVisibility() == View.INVISIBLE) {
             showChannelInfo();
         } else {
-            mBack.setVisibility(View.INVISIBLE);
+//            mBack.setVisibility(View.INVISIBLE);
             mHandler.removeCallbacks(mHideChannelInfoRun);
             mHandler.post(mHideChannelInfoRun);
             mHandler.post(mUpdateLayout);   // Workaround Fix : SurfaceView
@@ -704,7 +710,7 @@ public class LivePlayActivity extends BaseActivity {
         @Override
         public void run() {
             Date date = new Date();
-            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
             tv_sys_time.setText(timeFormat.format(date));
             mHandler.postDelayed(this, 1000);
 
@@ -843,7 +849,7 @@ public class LivePlayActivity extends BaseActivity {
         if (channel_Name == null || channel_Name.getSourceNum() <= 0) {
             tv_source.setText("1/1");
         } else {
-            tv_source.setText("线路 " + (channel_Name.getSourceIndex() + 1) + "/" + channel_Name.getSourceNum());
+            tv_source.setText("源 " + (channel_Name.getSourceIndex() + 1) + "/" + channel_Name.getSourceNum());
         }
 
         getEpg(new Date());
@@ -881,7 +887,7 @@ public class LivePlayActivity extends BaseActivity {
         if (channel_Name == null || channel_Name.getSourceNum() <= 0) {
             tv_source.setText("1/1");
         } else {
-            tv_source.setText("线路 " + (channel_Name.getSourceIndex() + 1) + "/" + channel_Name.getSourceNum());
+            tv_source.setText("源 " + (channel_Name.getSourceIndex() + 1) + "/" + channel_Name.getSourceNum());
         }
 
         getEpg(new Date());
@@ -920,7 +926,7 @@ public class LivePlayActivity extends BaseActivity {
 
     //显示设置列表
     private void showSettingGroup() {
-        mBack.setVisibility(View.INVISIBLE);
+//        mBack.setVisibility(View.INVISIBLE);
         if (tvLeftChannelListLayout.getVisibility() == View.VISIBLE) {
             mHandler.removeCallbacks(mHideChannelListRun);
             mHandler.post(mHideChannelListRun);
@@ -937,7 +943,7 @@ public class LivePlayActivity extends BaseActivity {
             mSettingItemView.scrollToPosition(currentLiveChannelItem.getSourceIndex());
             mHandler.postDelayed(mFocusAndShowSettingGroup, 200);
         } else {
-            mBack.setVisibility(View.INVISIBLE);
+//            mBack.setVisibility(View.INVISIBLE);
             mHandler.removeCallbacks(mHideSettingLayoutRun);
             mHandler.post(mHideSettingLayoutRun);
         }
@@ -1444,6 +1450,7 @@ public class LivePlayActivity extends BaseActivity {
 
             @Override
             public void onItemClick(TvRecyclerView parent, View itemView, int position) {
+                clickSettingGroup(position);
             }
         });
 
@@ -1453,8 +1460,71 @@ public class LivePlayActivity extends BaseActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 FastClickCheckUtil.check(view);
                 selectSettingGroup(position, false);
+                clickSettingGroup(position);
             }
         });
+    }
+
+    private void clickSettingGroup(int position) {
+        switch (position) {
+            case 5://直播接口
+                // takagen99 : Added Live History list selection - 直播列表
+//                ArrayList<String> liveHistory = Hawk.get(HawkConfig.LIVE_HISTORY, new ArrayList<String>());
+//                if (liveHistory.isEmpty())
+//                    return;
+//                String current = Hawk.get(HawkConfig.LIVE_URL, "");
+//                int idx = 0;
+//                if (liveHistory.contains(current))
+//                    idx = liveHistory.indexOf(current);
+//                ApiHistoryDialog dialog = new ApiHistoryDialog(LivePlayActivity.this);
+//                dialog.setTip(getString(R.string.dia_history_live));
+//                dialog.setAdapter(new ApiHistoryDialogAdapter.SelectDialogInterface() {
+//                    @Override
+//                    public void click(String liveURL) {
+//                        Hawk.put(HawkConfig.LIVE_URL, liveURL);
+//                        liveChannelGroupList.clear();
+//                        try {
+//                            liveURL = Base64.encodeToString(liveURL.getBytes("UTF-8"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
+//                            liveURL = "http://127.0.0.1:9978/proxy?do=live&type=txt&ext=" + liveURL;
+//                            loadProxyLives(liveURL);
+//                        } catch (Throwable th) {
+//                            th.printStackTrace();
+//                        }
+//                        dialog.dismiss();
+//                    }
+//
+//                    @Override
+//                    public void del(String value, ArrayList<String> data) {
+//                        Hawk.put(HawkConfig.LIVE_HISTORY, data);
+//                    }
+//                }, liveHistory, idx);
+//                dialog.show();
+                ApiDialog dialog = new ApiDialog(LivePlayActivity.this);
+                EventBus.getDefault().register(dialog);
+                dialog.setOnListener(new ApiDialog.OnListener() {
+                    @Override
+                    public void onchange(String api) {
+                        Hawk.put(HawkConfig.API_URL, api);
+//                        tvApi.setText(api);
+                    }
+                });
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        ((BaseActivity) LivePlayActivity.this).hideSystemUI(true);
+                        EventBus.getDefault().unregister(dialog);
+                    }
+                });
+                dialog.show();
+                break;
+            case 6://退出
+                finish();
+                break;
+            case 7://关于
+                AboutDialog about = new AboutDialog(LivePlayActivity.this);
+                about.show();
+                break;
+        }
     }
 
     private void selectSettingGroup(int position, boolean focus) {
@@ -1583,86 +1653,11 @@ public class LivePlayActivity extends BaseActivity {
                         select = !Hawk.get(HawkConfig.LIVE_SKIP_PASSWORD, false);
                         Hawk.put(HawkConfig.LIVE_SKIP_PASSWORD, select);
                         break;
-//                    case 5:
-//                        // takagen99 : Added Live History list selection - 直播列表
-//                        ArrayList<String> liveHistory = Hawk.get(HawkConfig.LIVE_HISTORY, new ArrayList<String>());
-//                        if (liveHistory.isEmpty())
-//                            return;
-//                        String current = Hawk.get(HawkConfig.LIVE_URL, "");
-//                        int idx = 0;
-//                        if (liveHistory.contains(current))
-//                            idx = liveHistory.indexOf(current);
-//                        ApiHistoryDialog dialog = new ApiHistoryDialog(LivePlayActivity.this);
-//                        dialog.setTip(getString(R.string.dia_history_live));
-//                        dialog.setAdapter(new ApiHistoryDialogAdapter.SelectDialogInterface() {
-//                            @Override
-//                            public void click(String liveURL) {
-//                                Hawk.put(HawkConfig.LIVE_URL, liveURL);
-//                                liveChannelGroupList.clear();
-//                                try {
-//                                    liveURL = Base64.encodeToString(liveURL.getBytes("UTF-8"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
-//                                    liveURL = "http://127.0.0.1:9978/proxy?do=live&type=txt&ext=" + liveURL;
-//                                    loadProxyLives(liveURL);
-//                                } catch (Throwable th) {
-//                                    th.printStackTrace();
-//                                }
-//                                dialog.dismiss();
-//                            }
-//
-//                            @Override
-//                            public void del(String value, ArrayList<String> data) {
-//                                Hawk.put(HawkConfig.LIVE_HISTORY, data);
-//                            }
-//                        }, liveHistory, idx);
-//                        dialog.show();
-//                        break;
+
                 }
                 liveSettingItemAdapter.selectItem(position, select, false);
                 break;
-            case 5:// 直播历史 takagen99 : Live History
-                switch (position) {
-                    case 0:
-                        // takagen99 : Added Live History list selection - 直播列表
-                        ArrayList<String> liveHistory = Hawk.get(HawkConfig.LIVE_HISTORY, new ArrayList<String>());
-                        if (liveHistory.isEmpty())
-                            return;
-                        String current = Hawk.get(HawkConfig.LIVE_URL, "");
-                        int idx = 0;
-                        if (liveHistory.contains(current))
-                            idx = liveHistory.indexOf(current);
-                        ApiHistoryDialog dialog = new ApiHistoryDialog(LivePlayActivity.this);
-                        dialog.setTip(getString(R.string.dia_history_live));
-                        dialog.setAdapter(new ApiHistoryDialogAdapter.SelectDialogInterface() {
-                            @Override
-                            public void click(String liveURL) {
-                                Hawk.put(HawkConfig.LIVE_URL, liveURL);
-                                liveChannelGroupList.clear();
-                                try {
-                                    liveURL = Base64.encodeToString(liveURL.getBytes("UTF-8"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
-                                    liveURL = "http://127.0.0.1:9978/proxy?do=live&type=txt&ext=" + liveURL;
-                                    loadProxyLives(liveURL);
-                                } catch (Throwable th) {
-                                    th.printStackTrace();
-                                }
-                                dialog.dismiss();
-                            }
-
-                            @Override
-                            public void del(String value, ArrayList<String> data) {
-                                Hawk.put(HawkConfig.LIVE_HISTORY, data);
-                            }
-                        }, liveHistory, idx);
-                        dialog.show();
-                        break;
-                }
-                break;
-            case 6:// 退出直播 takagen99 : Added Exit Option
-                switch (position) {
-                    case 0:
-                        finish();
-                        break;
-                }
-                break;
+          
         }
         mHandler.removeCallbacks(mHideSettingLayoutRun);
         mHandler.postDelayed(mHideSettingLayoutRun, 5000);
@@ -1805,15 +1800,16 @@ public class LivePlayActivity extends BaseActivity {
     }
 
     private void initLiveSettingGroupList() {
-        ArrayList<String> groupNames = new ArrayList<>(Arrays.asList("线路选择", "画面比例", "播放解码", "超时换源", "偏好设置", "直播地址", "退出直播"));
+        ArrayList<String> groupNames = new ArrayList<>(Arrays.asList("线路选择", "画面比例", "播放解码", "超时换源", "偏好设置", "直播接口", "退出直播","关于"));
         ArrayList<ArrayList<String>> itemsArrayList = new ArrayList<>();
         ArrayList<String> sourceItems = new ArrayList<>();
         ArrayList<String> scaleItems = new ArrayList<>(Arrays.asList("默认", "16:9", "4:3", "填充", "原始", "裁剪"));
         ArrayList<String> playerDecoderItems = new ArrayList<>(Arrays.asList("系统", "ijk硬解", "ijk软解", "exo"));
         ArrayList<String> timeoutItems = new ArrayList<>(Arrays.asList("关", "5s", "10s", "15s", "20s", "25s", "30s"));
         ArrayList<String> personalSettingItems = new ArrayList<>(Arrays.asList("显示时间", "显示网速", "换台反转", "跨选分类", "关闭密码"));
-        ArrayList<String> liveAdd = new ArrayList<>(Arrays.asList("列表历史"));
-        ArrayList<String> exitConfirm = new ArrayList<>(Arrays.asList("确定"));
+        ArrayList<String> liveAdd = new ArrayList<>(Arrays.asList());
+        ArrayList<String> exitConfirm = new ArrayList<>(Arrays.asList());
+        ArrayList<String> aboutItems = new ArrayList<>(Arrays.asList());
         itemsArrayList.add(sourceItems);
         itemsArrayList.add(scaleItems);
         itemsArrayList.add(playerDecoderItems);
@@ -1821,6 +1817,7 @@ public class LivePlayActivity extends BaseActivity {
         itemsArrayList.add(personalSettingItems);
         itemsArrayList.add(liveAdd);
         itemsArrayList.add(exitConfirm);
+        itemsArrayList.add(aboutItems);
 
         liveSettingGroupList.clear();
         for (int i = 0; i < groupNames.size(); i++) {
@@ -1841,7 +1838,7 @@ public class LivePlayActivity extends BaseActivity {
         liveSettingGroupList.get(4).getLiveSettingItems().get(0).setItemSelected(Hawk.get(HawkConfig.LIVE_SHOW_TIME, false));
         liveSettingGroupList.get(4).getLiveSettingItems().get(1).setItemSelected(Hawk.get(HawkConfig.LIVE_SHOW_NET_SPEED, false));
         liveSettingGroupList.get(4).getLiveSettingItems().get(2).setItemSelected(Hawk.get(HawkConfig.LIVE_CHANNEL_REVERSE, false));
-        liveSettingGroupList.get(4).getLiveSettingItems().get(3).setItemSelected(Hawk.get(HawkConfig.LIVE_CROSS_GROUP, false));
+        liveSettingGroupList.get(4).getLiveSettingItems().get(3).setItemSelected(Hawk.get(HawkConfig.LIVE_CROSS_GROUP, true));
         liveSettingGroupList.get(4).getLiveSettingItems().get(4).setItemSelected(Hawk.get(HawkConfig.LIVE_SKIP_PASSWORD, false));
     }
 
