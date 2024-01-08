@@ -1,3 +1,4 @@
 rootProject.name = "XXLive"
 include ':app'
 include ':quickjs'
+include ':player'

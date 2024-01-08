@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.github.tvbox.osc.tk",
+  "applicationId": "com.cyh.xxlive.player",
   "variantName": "release",
   "elements": [
     {
@@ -12,8 +12,8 @@
       "filters": [],
       "attributes": [],
       "versionCode": 1,
-      "versionName": "1.0_20240107",
-      "outputFile": "app-release.apk"
+      "versionName": "1.0_20240108",
+      "outputFile": "tvbox_20240108.apk"
     }
   ],
   "elementType": "File"
