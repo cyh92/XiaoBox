@@ -87,10 +87,8 @@ public class HomeActivity extends BaseActivity {
     private LinearLayout topLayout;
     private LinearLayout contentLayout;
     private TextView tvName;
-    private ImageView tvWifi;
     private ImageView tvFind;
     private ImageView tvStyle;
-    private ImageView tvDraw;
     private ImageView tvMenu;
     private TextView tvDate;
     private TvRecyclerView mGridView;
@@ -151,10 +149,8 @@ public class HomeActivity extends BaseActivity {
     private void initView() {
         this.topLayout = findViewById(R.id.topLayout);
         this.tvName = findViewById(R.id.tvName);
-        this.tvWifi = findViewById(R.id.tvWifi);
         this.tvFind = findViewById(R.id.tvFind);
         this.tvStyle = findViewById(R.id.tvStyle);
-        this.tvDraw = findViewById(R.id.tvDrawer);
         this.tvMenu = findViewById(R.id.tvMenu);
         this.tvDate = findViewById(R.id.tvDate);
         this.contentLayout = findViewById(R.id.contentLayout);
@@ -255,12 +251,7 @@ public class HomeActivity extends BaseActivity {
             }
         });
         // Button : Wifi >> Go into Android Wifi Settings -------------
-        tvWifi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-            }
-        });
+
         // Button : Search --------------------------------------------
         tvFind.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -289,13 +280,7 @@ public class HomeActivity extends BaseActivity {
                 }
             }
         });
-        // Button : Drawer >> To go into App Drawer -------------------
-        tvDraw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jumpActivity(AppsActivity.class);
-            }
-        });
+
         // Button : Settings >> To go into Settings --------------------
         tvMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,12 +297,12 @@ public class HomeActivity extends BaseActivity {
             }
         });
         // Button : Date >> Go into Android Date Settings --------------
-        tvDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));
-            }
-        });
+//        tvDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));
+//            }
+//        });
         setLoadSir(this.contentLayout);
         //mHandler.postDelayed(mFindFocus, 250);
     }
@@ -363,12 +348,12 @@ public class HomeActivity extends BaseActivity {
     boolean HomeShow = Hawk.get(HawkConfig.HOME_SHOW_SOURCE, false);
 
     // takagen99 : Check if network is available
-    boolean isNetworkAvailable() {
-        ConnectivityManager cm
-                = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
-    }
+//    boolean isNetworkAvailable() {
+//        ConnectivityManager cm
+//                = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+//        NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();
+//        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+//    }
 
     private void initData() {
 
@@ -380,16 +365,16 @@ public class HomeActivity extends BaseActivity {
         }
 
         // takagen99: If network available, check connected Wifi or Lan
-        if (isNetworkAvailable()) {
-            ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-            if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI) {
-                tvWifi.setImageDrawable(res.getDrawable(R.drawable.hm_wifi));
-            } else if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE) {
-                tvWifi.setImageDrawable(res.getDrawable(R.drawable.hm_mobile));
-            } else if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_ETHERNET) {
-                tvWifi.setImageDrawable(res.getDrawable(R.drawable.hm_lan));
-            }
-        }
+//        if (isNetworkAvailable()) {
+//            ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+//            if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI) {
+//                tvWifi.setImageDrawable(res.getDrawable(R.drawable.hm_wifi));
+//            } else if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_MOBILE) {
+//                tvWifi.setImageDrawable(res.getDrawable(R.drawable.hm_mobile));
+//            } else if (cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_ETHERNET) {
+//                tvWifi.setImageDrawable(res.getDrawable(R.drawable.hm_lan));
+//            }
+//        }
 
         // takagen99: Set Style either Grid or Line
         if (Hawk.get(HawkConfig.HOME_REC_STYLE, false)) {
@@ -751,10 +736,8 @@ public class HomeActivity extends BaseActivity {
             animatorSet.setDuration(250);
             animatorSet.start();
             tvName.setFocusable(false);
-            tvWifi.setFocusable(false);
             tvFind.setFocusable(false);
             tvStyle.setFocusable(false);
-            tvDraw.setFocusable(false);
             tvMenu.setFocusable(false);
             return;
         }
@@ -770,10 +753,8 @@ public class HomeActivity extends BaseActivity {
             animatorSet.setDuration(250);
             animatorSet.start();
             tvName.setFocusable(true);
-            tvWifi.setFocusable(true);
             tvFind.setFocusable(true);
             tvStyle.setFocusable(true);
-            tvDraw.setFocusable(true);
             tvMenu.setFocusable(true);
         }
     }

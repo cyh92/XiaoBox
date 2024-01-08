@@ -394,6 +394,7 @@ public class LivePlayActivity extends BaseActivity {
                 switch (keyCode) {
                     case KeyEvent.KEYCODE_DPAD_UP:
                     case KeyEvent.KEYCODE_CHANNEL_UP:
+                    case KeyEvent.KEYCODE_PAGE_UP:
                         if (Hawk.get(HawkConfig.LIVE_CHANNEL_REVERSE, false))
                             playPrevious();
                         else
@@ -401,6 +402,7 @@ public class LivePlayActivity extends BaseActivity {
                         break;
                     case KeyEvent.KEYCODE_DPAD_DOWN:
                     case KeyEvent.KEYCODE_CHANNEL_DOWN:
+                    case KeyEvent.KEYCODE_PAGE_DOWN:
                         if (Hawk.get(HawkConfig.LIVE_CHANNEL_REVERSE, false))
                             playNext();
                         else
