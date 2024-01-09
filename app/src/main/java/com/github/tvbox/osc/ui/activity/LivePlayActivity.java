@@ -357,25 +357,36 @@ public class LivePlayActivity extends BaseActivity {
     private final Runnable mPlaySelectedChannel = new Runnable() {
         @Override
         public void run() {
-            tvSelectedChannel.setVisibility(View.INVISIBLE);
+            tvSelectedChannel.setVisibility(View.GONE);
             tvSelectedChannel.setText("");
-            int maxChannelIndex = getLiveChannels(currentChannelGroupIndex).size();
-            if (selectedChannelNumber > maxChannelIndex) {
-                selectedChannelNumber = maxChannelIndex;
+
+            int grpIndx = 0;
+            int chaIndx = 0;
+            int getMin = 1;
+            int getMax = 0;
+            for (int j = 0; j < 20; j++) {
+                getMax = getMin + getLiveChannels(j).size() - 1;
+
+                if (selectedChannelNumber >= getMin && selectedChannelNumber <= getMax) {
+                    grpIndx = j;
+                    chaIndx = selectedChannelNumber - getMin + 1;
+                    break;
+                } else {
+                    getMin = getMax + 1;
+                }
             }
-            if (selectedChannelNumber > 0) {
-                playChannel(currentChannelGroupIndex, selectedChannelNumber - 1, false);
+            
+            if (selectedChannelNumber > 0&&selectedChannelNumber<=getMax) {
+                playChannel(grpIndx, chaIndx - 1, false);
+            }else{
+                Toast.makeText(LivePlayActivity.this, "没有此频道", Toast.LENGTH_SHORT);
             }
             selectedChannelNumber = 0;
         }
     };
     //数字选台
     private void numericKeyDown(int digit) {
-        int maxChannelIndex = getLiveChannels(currentChannelGroupIndex).size();
         selectedChannelNumber = selectedChannelNumber * 10 + digit;
-        if (selectedChannelNumber > maxChannelIndex) {
-            selectedChannelNumber = maxChannelIndex;
-        }
 
         tvSelectedChannel.setText(Integer.toString(selectedChannelNumber));
         tvSelectedChannel.setVisibility(View.VISIBLE);
@@ -432,12 +443,12 @@ public class LivePlayActivity extends BaseActivity {
                     default:
                         if (keyCode >= KeyEvent.KEYCODE_0 && keyCode <= KeyEvent.KEYCODE_9) {
                             keyCode -= KeyEvent.KEYCODE_0;
-                        } else if ( keyCode >= KeyEvent.KEYCODE_NUMPAD_0 && keyCode <= KeyEvent.KEYCODE_NUMPAD_9) {
+                        } else if (keyCode >= KeyEvent.KEYCODE_NUMPAD_0 && keyCode <= KeyEvent.KEYCODE_NUMPAD_9) {
                             keyCode -= KeyEvent.KEYCODE_NUMPAD_0;
                         } else {
                             break;
                         }
-                        numericKeyDown(keyCode);                      
+                        numericKeyDown(keyCode);
                 }
             }
         } else if (event.getAction() == KeyEvent.ACTION_UP) {
