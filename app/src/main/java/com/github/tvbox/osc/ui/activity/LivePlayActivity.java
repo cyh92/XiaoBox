@@ -1477,7 +1477,7 @@ public class LivePlayActivity extends BaseActivity {
                     public void onchange(String api) {
                         Hawk.put(HawkConfig.API_URL, api);
 //                        tvApi.setText(api);
-                        loadProxyLives(api);
+                        jumpActivity(HomeActivity.class);
                     }
                 });
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
