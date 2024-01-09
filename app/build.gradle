@@ -9,7 +9,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId 'com.cyh.xxlive.player'
+        applicationId 'com.github.tvbox.osc.tk'
         minSdkVersion 18
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 26
@@ -84,7 +84,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation files('libs\\thunder.jar')
     implementation project(path: ':quickjs')
-    implementation project(path: ':player')
 
     annotationProcessor 'androidx.room:room-compiler:2.5.1'
     implementation 'androidx.room:room-runtime:2.5.1'
