@@ -1470,37 +1470,6 @@ public class LivePlayActivity extends BaseActivity {
     private void clickSettingGroup(int position) {
         switch (position) {
             case 5://直播接口
-                // takagen99 : Added Live History list selection - 直播列表
-//                ArrayList<String> liveHistory = Hawk.get(HawkConfig.LIVE_HISTORY, new ArrayList<String>());
-//                if (liveHistory.isEmpty())
-//                    return;
-//                String current = Hawk.get(HawkConfig.LIVE_URL, "");
-//                int idx = 0;
-//                if (liveHistory.contains(current))
-//                    idx = liveHistory.indexOf(current);
-//                ApiHistoryDialog dialog = new ApiHistoryDialog(LivePlayActivity.this);
-//                dialog.setTip(getString(R.string.dia_history_live));
-//                dialog.setAdapter(new ApiHistoryDialogAdapter.SelectDialogInterface() {
-//                    @Override
-//                    public void click(String liveURL) {
-//                        Hawk.put(HawkConfig.LIVE_URL, liveURL);
-//                        liveChannelGroupList.clear();
-//                        try {
-//                            liveURL = Base64.encodeToString(liveURL.getBytes("UTF-8"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
-//                            liveURL = "http://127.0.0.1:9978/proxy?do=live&type=txt&ext=" + liveURL;
-//                            loadProxyLives(liveURL);
-//                        } catch (Throwable th) {
-//                            th.printStackTrace();
-//                        }
-//                        dialog.dismiss();
-//                    }
-//
-//                    @Override
-//                    public void del(String value, ArrayList<String> data) {
-//                        Hawk.put(HawkConfig.LIVE_HISTORY, data);
-//                    }
-//                }, liveHistory, idx);
-//                dialog.show();
                 ApiDialog dialog = new ApiDialog(LivePlayActivity.this);
                 EventBus.getDefault().register(dialog);
                 dialog.setOnListener(new ApiDialog.OnListener() {
@@ -1508,6 +1477,7 @@ public class LivePlayActivity extends BaseActivity {
                     public void onchange(String api) {
                         Hawk.put(HawkConfig.API_URL, api);
 //                        tvApi.setText(api);
+                        loadProxyLives(api);
                     }
                 });
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
