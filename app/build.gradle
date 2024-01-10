@@ -10,7 +10,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId 'com.cyh92.player'
+        applicationId 'com.cyh92.xxlive.player'
         minSdkVersion 18
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 26
