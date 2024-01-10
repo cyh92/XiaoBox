@@ -10,7 +10,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId 'com.github.tvbox.osc.tk'
+        applicationId 'com.cyh92.player'
         minSdkVersion 18
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 26
