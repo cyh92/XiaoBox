@@ -450,7 +450,6 @@ public class LivePlayActivity extends BaseActivity {
                             break;
                         }
                         numericKeyDown(keyCode);
-                        numericKeyDown(keyCode);
                 }
             }
         } else if (event.getAction() == KeyEvent.ACTION_UP) {
