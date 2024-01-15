@@ -386,12 +386,13 @@ public class LivePlayActivity extends BaseActivity {
     //数字选台
     private void numericKeyDown(int digit) {
         selectedChannelNumber = selectedChannelNumber * 10 + digit;
+        if (selectedChannelNumber < 10000) {
+            tvSelectedChannel.setText(Integer.toString(selectedChannelNumber));
+            tvSelectedChannel.setVisibility(View.VISIBLE);
 
-        tvSelectedChannel.setText(Integer.toString(selectedChannelNumber));
-        tvSelectedChannel.setVisibility(View.VISIBLE);
-
-        mHandler.removeCallbacks(mPlaySelectedChannel);
-        mHandler.postDelayed(mPlaySelectedChannel, 2000);
+            mHandler.removeCallbacks(mPlaySelectedChannel);
+            mHandler.postDelayed(mPlaySelectedChannel, 2000);
+        }
     }
 
     @Override
