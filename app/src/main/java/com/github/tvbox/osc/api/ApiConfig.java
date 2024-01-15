@@ -64,7 +64,7 @@ public class ApiConfig {
     private List<IJKCode> ijkCodes;
     private String spider = null;
     public String wallpaper = "";
-
+    public int groupNum=0;
     private final SourceBean emptyHome = new SourceBean();
 
     private final JarLoader jarLoader = new JarLoader();
@@ -617,6 +617,7 @@ public class ApiConfig {
         int groupIndex = 0;
         int channelIndex = 0;
         int channelNum = 0;
+        groupNum=livesArray.size();
         for (JsonElement groupElement : livesArray) {
             LiveChannelGroup liveChannelGroup = new LiveChannelGroup();
             liveChannelGroup.setLiveChannels(new ArrayList<LiveChannelItem>());
@@ -658,6 +659,10 @@ public class ApiConfig {
 
     public String getSpider() {
         return spider;
+    }
+
+    public int getGroupNum(){
+        return  groupNum;
     }
 
     public Spider getCSP(SourceBean sourceBean) {
