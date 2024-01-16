@@ -364,8 +364,8 @@ public class LivePlayActivity extends BaseActivity {
             int getMax = 0;
             int groupNum=ApiConfig.get().getGroupNum();
             for (int j = 0; j < groupNum; j++) {
-                getMax = getMin + getLiveChannels(j).size() - 1;
-
+                int n=liveChannelGroupList.get(j).getLiveChannels().size()-1;
+                getMax = getMin + n;
                 if (selectedChannelNumber >= getMin && selectedChannelNumber <= getMax) {
                     grpIndx = j;
                     chaIndx = selectedChannelNumber - getMin + 1;
@@ -375,10 +375,8 @@ public class LivePlayActivity extends BaseActivity {
                 }
             }
             
-            if (selectedChannelNumber > 0&&selectedChannelNumber<=getMax) {
+            if (selectedChannelNumber > 0) {
                 playChannel(grpIndx, chaIndx - 1, false);
-            }else{
-                Toast.makeText(LivePlayActivity.this, "没有此频道", Toast.LENGTH_SHORT);
             }
             selectedChannelNumber = 0;
         }
