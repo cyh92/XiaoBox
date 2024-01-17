@@ -39,7 +39,7 @@ android {
                 }
             }
             ndk {
-                abiFilters 'armeabi-v7a'                
+                abiFilters 'armeabi-v7a','arm64_v8a'
             }
         }
     }
