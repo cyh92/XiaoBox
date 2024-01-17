@@ -373,6 +373,10 @@ public class LivePlayActivity extends BaseActivity {
                 } else {
                     getMin = getMax + 1;
                 }
+                if (isNeedInputPassword(j)) {
+                    chaIndx=1;
+                    grpIndx=j+1;
+                }
             }
             
             if (selectedChannelNumber > 0) {
