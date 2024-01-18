@@ -374,8 +374,9 @@ public class LivePlayActivity extends BaseActivity {
                     getMin = getMax + 1;
                 }
                 if (isNeedInputPassword(j)) {
-                    chaIndx=1;
-                    grpIndx=j+1;
+                    chaIndx = 1;
+                    grpIndx = j < groupNum ? j + 1 : 0;
+                    break;
                 }
             }
             
