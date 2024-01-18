@@ -373,14 +373,13 @@ public class LivePlayActivity extends BaseActivity {
                 } else {
                     getMin = getMax + 1;
                 }
-                if (isNeedInputPassword(j)) {
-                    chaIndx = 1;
-                    grpIndx = j < groupNum ? j + 1 : 0;
-                    break;
-                }
             }
             
             if (selectedChannelNumber > 0) {
+                if (isNeedInputPassword(grpIndx)) {
+                    chaIndx = 1;
+                    grpIndx = grpIndx < groupNum ? grpIndx + 1 : 0;
+                }
                 playChannel(grpIndx, chaIndx - 1, false);
             }
             selectedChannelNumber = 0;
