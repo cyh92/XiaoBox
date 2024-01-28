@@ -230,7 +230,7 @@
 -dontwarn com.aliyun.**
 -dontwarn com.cicada.**
 
-#missing_rules.txt
+# from app -> build -> outputs -> mapping -> your_app_name -> missing_rules.txt
 # Please add these rules to your existing keep rules in order to suppress warnings.
 # This is generated automatically by the Android Gradle plugin.
 -dontwarn com.android.org.conscrypt.SSLParametersImpl
