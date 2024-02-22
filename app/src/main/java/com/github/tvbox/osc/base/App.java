@@ -24,8 +24,6 @@ import com.p2p.P2PClass;
 import com.whl.quickjs.android.QuickJSLoader;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import io.github.inflationx.calligraphy3.CalligraphyConfig;
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
@@ -110,15 +108,15 @@ public class App extends MultiDexApplication {
         Hawk.init(this).build();
         Hawk.put(HawkConfig.DEBUG_OPEN, false);
 
-        putDefault(HawkConfig.API_URL, "http://t.tvbox.life");       //默认源
-        putDefault(HawkConfig.LIVE_URL, "http://cyh92.cn/list.txt");       //直播源
-        ArrayList<String> apiHistory =new ArrayList<>(Arrays.asList("http://t.tvbox.life"));// Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
-        ArrayList<String> liveHistory =new ArrayList<>(Arrays.asList("http://cyh92.cn/list.txt"));// Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
+//        putDefault(HawkConfig.API_URL, "http://t.tvbox.life");       //默认源
+//        putDefault(HawkConfig.LIVE_URL, "http://cyh92.cn/list.txt");       //直播源
+//        ArrayList<String> apiHistory =new ArrayList<>(Arrays.asList("http://t.tvbox.life"));// Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
+//        ArrayList<String> liveHistory =new ArrayList<>(Arrays.asList("http://cyh92.cn/list.txt"));// Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
+//
+//        putDefault(HawkConfig.API_HISTORY, apiHistory);       //默认源
+//        putDefault(HawkConfig.LIVE_HISTORY, liveHistory);       //直播源
 
-        putDefault(HawkConfig.API_HISTORY, apiHistory);       //默认源
-        putDefault(HawkConfig.LIVE_HISTORY, liveHistory);       //直播源
-
-        putDefault(HawkConfig.HOME_DEFAULT_SHOW, true);       //启动时自动进入直播
+//        putDefault(HawkConfig.HOME_DEFAULT_SHOW, true);       //启动时自动进入直播
         putDefault(HawkConfig.LIVE_CROSS_GROUP, true);       //跨选分类
         // 首页选项
         putDefault(HawkConfig.HOME_SHOW_SOURCE, true);       //数据源显示: true=开启, false=关闭
