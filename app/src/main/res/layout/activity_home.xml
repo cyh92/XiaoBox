@@ -85,7 +85,6 @@
             android:background="@drawable/button_dialog_vod"
             android:clickable="true"
             android:focusable="true"
-            android:nextFocusDown="@id/tvDrive"
             android:padding="@dimen/vs_5"
             android:src="@drawable/hm_settings" />
 
