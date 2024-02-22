@@ -11,10 +11,9 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId 'com.cyh92.xxlive.player'
-        minSdkVersion 18
-        //noinspection ExpiredTargetSdkVersion
-        targetSdkVersion 30
+        applicationId 'com.github.tvbox.osc.tk'
+        minSdkVersion 19
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0_".concat(buildTime())
         multiDexEnabled true
