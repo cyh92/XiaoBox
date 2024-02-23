@@ -378,7 +378,7 @@ public class LivePlayActivity extends BaseActivity {
             if (selectedChannelNumber > 0) {
                 if (isNeedInputPassword(grpIndx)) {
                     chaIndx = 1;
-                    grpIndx = grpIndx < groupNum ? grpIndx + 1 : 0;
+                    grpIndx = grpIndx + 1;
                 }
                 playChannel(grpIndx, chaIndx - 1, false);
             }

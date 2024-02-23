@@ -2,11 +2,14 @@ package com.github.tvbox.osc.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.github.tvbox.osc.R;
 import com.github.tvbox.osc.api.ApiConfig;
@@ -15,10 +18,16 @@ import com.github.tvbox.osc.bean.Movie;
 import com.github.tvbox.osc.bean.VodInfo;
 import com.github.tvbox.osc.cache.RoomDataManger;
 import com.github.tvbox.osc.event.ServerEvent;
-import com.github.tvbox.osc.ui.activity.*;
+import com.github.tvbox.osc.ui.activity.CollectActivity;
+import com.github.tvbox.osc.ui.activity.DetailActivity;
+import com.github.tvbox.osc.ui.activity.FastSearchActivity;
+import com.github.tvbox.osc.ui.activity.LivePlayActivity;
+import com.github.tvbox.osc.ui.activity.PushActivity;
+import com.github.tvbox.osc.ui.activity.SearchActivity;
 import com.github.tvbox.osc.ui.adapter.HomeHotVodAdapter;
 import com.github.tvbox.osc.util.FastClickCheckUtil;
 import com.github.tvbox.osc.util.HawkConfig;
+import com.github.tvbox.osc.util.PreferencesUtils;
 import com.github.tvbox.osc.util.UA;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -45,12 +54,11 @@ import java.util.List;
  * @description:
  */
 public class UserFragment extends BaseLazyFragment implements View.OnClickListener {
-    private LinearLayout tvLive;
-    private LinearLayout tvSearch;
-    private LinearLayout tvSetting;
-    private LinearLayout tvHistory;
-    private LinearLayout tvCollect;
-    private LinearLayout tvPush;
+    private FrameLayout tvLive;
+    private FrameLayout ll_go_play;
+    private FrameLayout tvCollect;
+    private FrameLayout tvPush;
+    private TextView tv_video_name;
     public static HomeHotVodAdapter homeHotVodAdapter;
     private List<Movie.Video> homeSourceRec;
     public static TvRecyclerView tvHotListForGrid;
@@ -71,19 +79,6 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
 
     @Override
     public void onFragmentResume() {
-
-        // takagen99: Initialize Icon Placement
-        if (!Hawk.get(HawkConfig.HOME_SEARCH_POSITION, true)) {
-            tvSearch.setVisibility(View.VISIBLE);
-        } else {
-            tvSearch.setVisibility(View.GONE);
-        }
-        if (!Hawk.get(HawkConfig.HOME_MENU_POSITION, true)) {
-            tvSetting.setVisibility(View.VISIBLE);
-        } else {
-            tvSetting.setVisibility(View.GONE);
-        }
-
         super.onFragmentResume();
         if (Hawk.get(HawkConfig.HOME_REC, 0) == 2) {
             List<VodInfo> allVodRecord = RoomDataManger.getAllVodRecord(20);
@@ -111,23 +106,18 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
     protected void init() {
         EventBus.getDefault().register(this);
         tvLive = findViewById(R.id.tvLive);
-        tvSearch = findViewById(R.id.tvSearch);
-        tvSetting = findViewById(R.id.tvSetting);
+        ll_go_play= findViewById(R.id.ll_go_play);
         tvCollect = findViewById(R.id.tvFavorite);
-        tvHistory = findViewById(R.id.tvHistory);
         tvPush = findViewById(R.id.tvPush);
         tvLive.setOnClickListener(this);
-        tvSearch.setOnClickListener(this);
-        tvSetting.setOnClickListener(this);
-        tvHistory.setOnClickListener(this);
         tvPush.setOnClickListener(this);
         tvCollect.setOnClickListener(this);
+        ll_go_play.setOnClickListener(this);
         tvLive.setOnFocusChangeListener(focusChangeListener);
-        tvSearch.setOnFocusChangeListener(focusChangeListener);
-        tvSetting.setOnFocusChangeListener(focusChangeListener);
-        tvHistory.setOnFocusChangeListener(focusChangeListener);
+        ll_go_play.setOnFocusChangeListener(focusChangeListener);
         tvPush.setOnFocusChangeListener(focusChangeListener);
         tvCollect.setOnFocusChangeListener(focusChangeListener);
+        tv_video_name = findViewById (R.id.tv_video_name);
         tvHotListForLine = findViewById(R.id.tvHotListForLine);
         tvHotListForGrid = findViewById(R.id.tvHotListForGrid);
         tvHotListForGrid.setHasFixedSize(true);
@@ -169,6 +159,21 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
                 }
             }
         });
+        findViewById(R.id.ll_go_play).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String key = PreferencesUtils.getString(requireContext(), "last_tv_key");
+                String id = PreferencesUtils.getString(requireContext(), "last_tv_id");
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(id)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", id);
+                    bundle.putString("sourceKey", key);
+                    jumpActivity(DetailActivity.class, bundle);
+                }else {
+                    ToastUtils.showShort("暂无观看记录");
+                }
+            }
+        });
         // takagen99 : Long press to trigger Delete Mode for VOD History on Home Page
         homeHotVodAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
             @Override
@@ -189,14 +194,7 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
                 return true;
             }
         });
-        
-        tvHistory.setOnLongClickListener(new View.OnLongClickListener() {
-        	@Override
-            public boolean onLongClick(View v) {
-                HomeActivity.homeRecf();
-                return HomeActivity.reHome(mContext);
-            }
-        });
+
         
         // Grid View
         tvHotListForGrid.setOnItemListener(new TvRecyclerView.OnItemListener() {
@@ -246,7 +244,24 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
             tvHotListForLine.setVisibility(View.VISIBLE);
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume ();
+        recordData ();
+    }
+    private void recordData(){
+        String key = PreferencesUtils.getString(requireContext(), "last_tv_key");
+        String id = PreferencesUtils.getString(requireContext(), "last_tv_id");
+        if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(id)) {
+            VodInfo vodInfoRecord = RoomDataManger.getVodInfo(key, id);
+            if (vodInfoRecord != null) {
+                tv_video_name.setText(vodInfoRecord.name+" "+vodInfoRecord.playNote);
+            }else{
+                tv_video_name.setText("暂无观看记录");
+            }
+        }
 
+    }
     private void initHomeHotVod(HomeHotVodAdapter adapter) {
         if (Hawk.get(HawkConfig.HOME_REC, 0) == 1) {
             if (homeSourceRec != null) {
@@ -336,11 +351,7 @@ public class UserFragment extends BaseLazyFragment implements View.OnClickListen
             jumpActivity(LivePlayActivity.class);
         } else if (v.getId() == R.id.tvSearch) {
             jumpActivity(SearchActivity.class);
-        } else if (v.getId() == R.id.tvSetting) {
-            jumpActivity(SettingActivity.class);
-        } else if (v.getId() == R.id.tvHistory) {
-            jumpActivity(HistoryActivity.class);
-        } else if (v.getId() == R.id.tvPush) {
+        }else if (v.getId() == R.id.tvPush) {
             jumpActivity(PushActivity.class);
         } else if (v.getId() == R.id.tvFavorite) {
             jumpActivity(CollectActivity.class);

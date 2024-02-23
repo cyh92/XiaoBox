@@ -1,18 +1,16 @@
 package com.github.tvbox.osc.ui.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.IntEvaluator;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,9 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.viewpager.widget.ViewPager;
 
@@ -56,7 +54,6 @@ import com.github.tvbox.osc.ui.tv.widget.NoScrollViewPager;
 import com.github.tvbox.osc.ui.tv.widget.ViewObj;
 import com.github.tvbox.osc.util.AppManager;
 import com.github.tvbox.osc.util.DefaultConfig;
-import com.github.tvbox.osc.util.FileUtils;
 import com.github.tvbox.osc.util.HawkConfig;
 import com.github.tvbox.osc.util.LOG;
 import com.github.tvbox.osc.viewmodel.SourceViewModel;
@@ -70,7 +67,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -237,11 +233,18 @@ public class HomeActivity extends BaseActivity {
 //                dataInitOk = false;
 //                jarInitOk = true;
 //                showSiteSwitch();
-                File dir = getCacheDir();
-                FileUtils.recursiveDelete(dir);
-                dir = getExternalCacheDir();
-                FileUtils.recursiveDelete(dir);
-                Toast.makeText(HomeActivity.this, getString(R.string.hm_cache_del), Toast.LENGTH_SHORT).show();
+
+                if(dataInitOk && jarInitOk){
+                    showSiteSwitch();
+                }else {
+                    jumpActivity(SettingActivity.class);
+                }
+
+//                File dir = getCacheDir();
+//                FileUtils.recursiveDelete(dir);
+//                dir = getExternalCacheDir();
+//                FileUtils.recursiveDelete(dir);
+//                Toast.makeText(HomeActivity.this, getString(R.string.hm_cache_del), Toast.LENGTH_SHORT).show();
             }
         });
         tvName.setOnLongClickListener(new View.OnLongClickListener() {
@@ -622,17 +625,6 @@ public class HomeActivity extends BaseActivity {
             tvName.setText(R.string.app_name);
         }
 
-        // takagen99: Icon Placement
-        if (Hawk.get(HawkConfig.HOME_SEARCH_POSITION, true)) {
-            tvFind.setVisibility(View.VISIBLE);
-        } else {
-            tvFind.setVisibility(View.GONE);
-        }
-        if (Hawk.get(HawkConfig.HOME_MENU_POSITION, true)) {
-            tvMenu.setVisibility(View.VISIBLE);
-        } else {
-            tvMenu.setVisibility(View.GONE);
-        }
         mHandler.post(mRunnable);
     }
 
@@ -684,15 +676,26 @@ public class HomeActivity extends BaseActivity {
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (topHide < 0)
             return false;
+        int keyCode = event.getKeyCode();
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            if (event.getKeyCode() == KeyEvent.KEYCODE_MENU) {
-                showSiteSwitch();
+            switch (keyCode){
+                case KeyEvent.KEYCODE_MENU:
+                    showSiteSwitch();
+                    break;
+                case KeyEvent.KEYCODE_TV:
+                case KeyEvent.KEYCODE_UNKNOWN:
+                    jumpActivity(LivePlayActivity.class);
+                    break;
+                default:
+//                    tvName.setText(Integer.toString(keyCode));
+                    if (keyCode >= KeyEvent.KEYCODE_0 && keyCode <= KeyEvent.KEYCODE_9) {
+                        jumpActivity(LivePlayActivity.class);
+                    } else if (keyCode >= KeyEvent.KEYCODE_NUMPAD_0 && keyCode <= KeyEvent.KEYCODE_NUMPAD_9) {
+                        jumpActivity(LivePlayActivity.class);
+                    } else {
+                        break;
+                    }
             }
-//            if (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN) {
-//                if () {
-//
-//                }
-//            }
         } else if (event.getAction() == KeyEvent.ACTION_UP) {
 
         }
