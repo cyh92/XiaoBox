@@ -206,8 +206,8 @@ public class LivePlayActivity extends BaseActivity {
         mTotalTime = findViewById(R.id.total_time);
 
         // Center Back Button
-//        mBack = findViewById(R.id.tvBackButton);
-//        mBack.setVisibility(View.INVISIBLE);
+        mBack = findViewById(R.id.tvBackButton);
+        mBack.setVisibility(View.INVISIBLE);
 
         // Bottom Info
         tvBottomLayout = findViewById(R.id.tvBottomLayout);
@@ -299,12 +299,12 @@ public class LivePlayActivity extends BaseActivity {
             }
         });
         // Button: BACK click to go back to previous page -------------------
-//        mBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                finish();
-//            }
-//        });
+        mBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     boolean PiPON = Hawk.get(HawkConfig.BACKGROUND_PLAY_TYPE, 0) == 2;
@@ -517,7 +517,7 @@ public class LivePlayActivity extends BaseActivity {
     }
 
     private void showChannelList() {
-//        mBack.setVisibility(View.INVISIBLE);
+        mBack.setVisibility(View.INVISIBLE);
         if (tvBottomLayout.getVisibility() == View.VISIBLE) {
             mHandler.removeCallbacks(mHideChannelInfoRun);
             mHandler.post(mHideChannelInfoRun);
@@ -535,7 +535,7 @@ public class LivePlayActivity extends BaseActivity {
             mHandler.postDelayed(mFocusCurrentChannelAndShowChannelList, 200);
             mHandler.post(tv_sys_timeRunnable);
         } else {
-//            mBack.setVisibility(View.INVISIBLE);
+            mBack.setVisibility(View.INVISIBLE);
             mHandler.removeCallbacks(mHideChannelListRun);
             mHandler.post(mHideChannelListRun);
             mHandler.removeCallbacks(tv_sys_timeRunnable);
@@ -623,7 +623,7 @@ public class LivePlayActivity extends BaseActivity {
     private void showChannelInfo() {
         // takagen99: Check if Touch Screen, show back button
         if (supportsTouch()) {
-//            mBack.setVisibility(View.VISIBLE);
+            mBack.setVisibility(View.VISIBLE);
             System.out.print("触摸屏");
         }
 
@@ -646,7 +646,7 @@ public class LivePlayActivity extends BaseActivity {
     private final Runnable mHideChannelInfoRun = new Runnable() {
         @Override
         public void run() {
-//            mBack.setVisibility(View.INVISIBLE);
+            mBack.setVisibility(View.INVISIBLE);
             if (tvBottomLayout.getVisibility() == View.VISIBLE) {
                 tvBottomLayout.animate()
                         .alpha(0.0f)
@@ -675,7 +675,7 @@ public class LivePlayActivity extends BaseActivity {
         } else if (tvBottomLayout.getVisibility() == View.INVISIBLE) {
             showChannelInfo();
         } else {
-//            mBack.setVisibility(View.INVISIBLE);
+            mBack.setVisibility(View.INVISIBLE);
             mHandler.removeCallbacks(mHideChannelInfoRun);
             mHandler.post(mHideChannelInfoRun);
             mHandler.post(mUpdateLayout);   // Workaround Fix : SurfaceView
@@ -941,7 +941,7 @@ public class LivePlayActivity extends BaseActivity {
 
     //显示设置列表
     private void showSettingGroup() {
-//        mBack.setVisibility(View.INVISIBLE);
+        mBack.setVisibility(View.INVISIBLE);
         if (tvLeftChannelListLayout.getVisibility() == View.VISIBLE) {
             mHandler.removeCallbacks(mHideChannelListRun);
             mHandler.post(mHideChannelListRun);
@@ -958,7 +958,7 @@ public class LivePlayActivity extends BaseActivity {
             mSettingItemView.scrollToPosition(currentLiveChannelItem.getSourceIndex());
             mHandler.postDelayed(mFocusAndShowSettingGroup, 200);
         } else {
-//            mBack.setVisibility(View.INVISIBLE);
+            mBack.setVisibility(View.INVISIBLE);
             mHandler.removeCallbacks(mHideSettingLayoutRun);
             mHandler.post(mHideSettingLayoutRun);
         }
