@@ -333,14 +333,15 @@
                     android:layout_marginLeft="@dimen/vs_20"
                     android:layout_marginTop="@dimen/vs_5"
                     android:layout_marginBottom="@dimen/vs_5"
-                    android:background="?attr/color_theme" />
+                    android:background="@color/color_theme_50" />
+
                 <TextView
                     android:id="@+id/tv_channel_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|left"
-                    android:layout_weight="0"
                     android:layout_marginRight="@dimen/vs_20"
+                    android:layout_weight="0"
                     android:fontFamily="sans-serif-condensed"
                     android:gravity="left"
                     android:paddingLeft="@dimen/vs_20"
@@ -354,6 +355,7 @@
                     android:textSize="@dimen/ts_36"
                     android:textStyle="normal"
                     android:visibility="visible" />
+
                 <com.github.tvbox.osc.ui.tv.widget.MarqueeTextView
                     android:id="@+id/tv_channel_name"
                     android:layout_width="wrap_content"
@@ -373,6 +375,7 @@
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/ts_36"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/tv_size"
                     android:layout_width="wrap_content"
@@ -395,6 +398,7 @@
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/ts_30"
                     android:textStyle="normal" />
+
                 <TextView
                     android:id="@+id/tv_source"
                     android:layout_width="wrap_content"
@@ -415,6 +419,7 @@
                     android:textColor="@color/color_FFFFFF"
                     android:textSize="@dimen/ts_36"
                     android:textStyle="normal" />
+
                 <TextView
                     android:id="@+id/tv_sys_time"
                     android:layout_width="@dimen/vs_240"
@@ -464,6 +469,7 @@
                     android:textSize="@dimen/ts_20"
                     android:textStyle="normal"
                     android:visibility="visible" />
+
                 <com.github.tvbox.osc.ui.tv.widget.MarqueeTextView
                     android:id="@+id/tv_current_program_name"
                     android:layout_width="@dimen/vs_440"
