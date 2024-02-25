@@ -32,7 +32,8 @@
                 app:tv_horizontalSpacingWithMargins="@dimen/vs_10"
                 app:tv_layoutManager="V7LinearLayoutManager"
                 app:tv_selectedItemIsCentered="true"
-                app:tv_verticalSpacingWithMargins="@dimen/vs_10" />
+                app:tv_verticalSpacingWithMargins="@dimen/vs_10"
+                android:nextFocusDown="@id/tvLive"/>
 
 
             <LinearLayout
