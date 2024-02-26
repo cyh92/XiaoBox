@@ -37,7 +37,7 @@
                 android:layout_marginEnd="@dimen/vs_10"
                 android:layout_marginRight="@dimen/vs_10"
                 android:layout_marginBottom="@dimen/vs_4"
-                android:background="@color/color_theme" />
+                android:background="?attr/color_theme" />
 
             <TextView
                 android:id="@+id/tv_title_top"
@@ -811,6 +811,7 @@
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/vs_10"
             android:scrollbars="none">
             	
 	        <LinearLayout
@@ -818,7 +819,6 @@
 	            android:layout_width="match_parent"
 	            android:layout_height="match_parent"
 	            android:layout_gravity="center"
-	            android:layout_marginBottom="@dimen/vs_10"
 	            android:gravity="center"
 	            android:orientation="horizontal"
 	            android:paddingLeft="@dimen/vs_40"
