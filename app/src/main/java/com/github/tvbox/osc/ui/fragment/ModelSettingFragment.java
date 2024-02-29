@@ -61,6 +61,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * @description:
  */
 public class ModelSettingFragment extends BaseLazyFragment {
+    private TextView MultilineApi;
     private TextView tvDebugOpen;
     private TextView tvApi;
     // Home Section
@@ -272,11 +273,26 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 tvHomeShow.setText(Hawk.get(HawkConfig.HOME_SHOW_SOURCE, true) ? "开启" : "关闭");
             }
         });
-        findViewById(R.id.llHomeIcon).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.llMultilineApi).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
-                HomeIconDialog dialog = new HomeIconDialog(mActivity);
+                ApiDialog dialog = new ApiDialog(mActivity);
+                EventBus.getDefault().register(dialog);
+                dialog.setOnListener(new ApiDialog.OnListener() {
+                    @Override
+                    public void onchange(String api) {
+                        Hawk.put(HawkConfig.API_URL, api);
+                        tvApi.setText(api);
+                    }
+                });
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        ((BaseActivity) mActivity).hideSystemUI(true);
+                        EventBus.getDefault().unregister(dialog);
+                    }
+                });
                 dialog.show();
             }
         });

@@ -48,11 +48,11 @@
     <string name="det_desc">intro</string>
 
     // Settings Menu Page //
-    <string name="mn_config">Configuration Address</string>
+    <string name="ml_config">Multiline Settings</string>
+    <string name="mn_config">Lines Address</string>
     <string name="mn_home">Source</string>
     <string name="mn_home_show">Show Source</string>
     <string name="mn_home_type">Type</string>
-    <string name="mn_icon">Button</string>
     <string name="mn_history_num">History</string>
     <string name="mn_live_boot">Autostart Live</string>
     <string name="mn_wall_change">Wallpaper</string>

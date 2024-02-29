@@ -113,7 +113,7 @@
                     android:visibility="visible">
 
                     <LinearLayout
-                        android:id="@+id/llApi"
+                        android:id="@+id/llMultilineApi"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/vs_50"
                         android:layout_marginStart="@dimen/vs_5"
@@ -133,7 +133,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/vs_10"
-                            android:text="@string/mn_config"
+                            android:text="@string/ml_config"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
 
@@ -143,17 +143,18 @@
                             android:layout_weight="1" />
 
                         <TextView
-                            android:id="@+id/tvApi"
+                            android:id="@+id/MultilineApi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="middle"
                             android:singleLine="true"
+                            android:text="该功能未启用"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/llApiHistory"
+                        android:id="@+id/llMultilineApiHistory"
                         android:layout_width="@dimen/vs_60"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/vs_5"
@@ -171,6 +172,131 @@
                             android:layout_height="@dimen/vs_30"
                             android:focusable="true"
                             android:src="@drawable/hm_history" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/vs_50"
+                    android:layout_marginBottom="@dimen/vs_10"
+                    android:focusable="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/vs_0"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/vs_5"
+                        android:layout_marginLeft="@dimen/vs_5"
+                        android:layout_marginEnd="@dimen/vs_5"
+                        android:layout_marginRight="@dimen/vs_5"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/llApi"
+                            android:layout_width="@dimen/vs_0"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="@dimen/vs_5"
+                            android:layout_marginRight="@dimen/vs_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/shape_setting_model_focus"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/vs_20"
+                            android:paddingRight="@dimen/vs_20">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/vs_10"
+                                android:text="@string/mn_config"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/tvApi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="middle"
+                                android:singleLine="true"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llApiHistory"
+                            android:layout_width="@dimen/vs_60"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/vs_5"
+                            android:layout_marginLeft="@dimen/vs_5"
+                            android:layout_marginEnd="@dimen/vs_5"
+                            android:layout_marginRight="@dimen/vs_5"
+                            android:background="@drawable/shape_setting_model_focus"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/vs_10">
+
+                            <ImageView
+                                android:layout_width="@dimen/vs_30"
+                                android:layout_height="@dimen/vs_30"
+                                android:focusable="true"
+                                android:src="@drawable/hm_history" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llHomeApi"
+                        android:layout_width="@dimen/vs_0"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/vs_5"
+                        android:layout_marginLeft="@dimen/vs_5"
+                        android:layout_marginEnd="@dimen/vs_5"
+                        android:layout_marginRight="@dimen/vs_5"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_setting_model_focus"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/vs_20"
+                        android:paddingRight="@dimen/vs_20">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mn_home"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/tvHomeApi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="middle"
+                            android:singleLine="true"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/vs_10"
+                            android:layout_marginLeft="@dimen/vs_10"
+                            android:text=">"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/ts_24" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -258,107 +384,6 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/llHomeApi"
-                        android:layout_width="@dimen/vs_0"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="@dimen/vs_5"
-                        android:layout_marginLeft="@dimen/vs_5"
-                        android:layout_marginEnd="@dimen/vs_5"
-                        android:layout_marginRight="@dimen/vs_5"
-                        android:layout_weight="1"
-                        android:background="@drawable/shape_setting_model_focus"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/vs_20"
-                        android:paddingRight="@dimen/vs_20">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/mn_home"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_24" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:id="@+id/tvHomeApi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ellipsize="middle"
-                            android:singleLine="true"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_24" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/vs_10"
-                            android:layout_marginLeft="@dimen/vs_10"
-                            android:text=">"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/ts_24" />
-                    </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/showPreview"
-                            android:layout_width="@dimen/vs_0"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/vs_5"
-                            android:layout_marginLeft="@dimen/vs_5"
-                            android:layout_marginEnd="@dimen/vs_5"
-                            android:layout_marginRight="@dimen/vs_5"
-                            android:layout_weight="1"
-                            android:background="@drawable/shape_setting_model_focus"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingLeft="@dimen/vs_20"
-                            android:paddingRight="@dimen/vs_20">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/mn_preview"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/ts_24" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1" />
-
-                            <TextView
-                                android:id="@+id/showPreviewText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/ts_24" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/vs_10"
-                                android:layout_marginLeft="@dimen/vs_10"
-                                android:text=">"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/ts_24" />
-                        </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/vs_50"
-                    android:layout_marginBottom="@dimen/vs_10"
-                    android:focusable="false"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
                         android:layout_width="@dimen/vs_0"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/vs_5"
@@ -412,7 +437,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/llHomeIcon"
+                            android:id="@+id/showPreview"
                             android:layout_width="@dimen/vs_0"
                             android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/vs_5"
@@ -428,7 +453,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/mn_icon"
+                                android:text="@string/mn_preview"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/ts_24" />
 
@@ -438,7 +463,7 @@
                                 android:layout_weight="1" />
 
                             <TextView
-                                android:id="@+id/tvHomeIcon"
+                                android:id="@+id/showPreviewText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@android:color/white"
@@ -814,90 +839,99 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:layout_width="@dimen/vs_0"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/vs_5"
+                        android:layout_marginLeft="@dimen/vs_5"
+                        android:layout_marginEnd="@dimen/vs_5"
+                        android:layout_marginRight="@dimen/vs_5"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/llVideoPurify"
+                            android:layout_width="@dimen/vs_0"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="@dimen/vs_5"
+                            android:layout_marginRight="@dimen/vs_5"
+                            android:layout_weight="1"
+                            android:background="@drawable/shape_setting_model_focus"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/vs_20"
+                            android:paddingRight="@dimen/vs_20">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/mn_purify"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/tvVideoPurifyText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/vs_10"
+                                android:layout_marginLeft="@dimen/vs_10"
+                                android:text=">"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llIjkCachePlay"
                             android:layout_width="@dimen/vs_0"
                             android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/vs_5"
                             android:layout_marginLeft="@dimen/vs_5"
-                            android:layout_marginEnd="@dimen/vs_5"
-                            android:layout_marginRight="@dimen/vs_5"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
-                        <LinearLayout
-                                android:id="@+id/llVideoPurify"
-                                android:layout_width="@dimen/vs_0"
-                                android:layout_height="match_parent"
-                                android:layout_marginEnd="@dimen/vs_5"
-                                android:layout_marginRight="@dimen/vs_5"
-                                android:layout_weight="1"
-                                android:background="@drawable/shape_setting_model_focus"
-                                android:focusable="true"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:paddingLeft="@dimen/vs_20"
-                                android:paddingRight="@dimen/vs_20">
-                            <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/mn_purify"
-                                    android:textColor="@android:color/white"
-                                    android:textSize="@dimen/ts_24" />
-                            <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1" />
-                            <TextView
-                                    android:id="@+id/tvVideoPurifyText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@android:color/white"
-                                    android:textSize="@dimen/ts_24" />
-                            <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/vs_10"
-                                    android:layout_marginLeft="@dimen/vs_10"
-                                    android:text=">"
-                                    android:textColor="@android:color/white"
-                                    android:textSize="@dimen/ts_24" />
-                        </LinearLayout>
+                            android:background="@drawable/shape_setting_model_focus"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/vs_20"
+                            android:paddingRight="@dimen/vs_20">
 
-                        <LinearLayout
-                                android:id="@+id/llIjkCachePlay"
-                                android:layout_width="@dimen/vs_0"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="@dimen/vs_5"
-                                android:layout_marginLeft="@dimen/vs_5"
-                                android:layout_weight="1"
-                                android:background="@drawable/shape_setting_model_focus"
-                                android:focusable="true"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:paddingLeft="@dimen/vs_20"
-                                android:paddingRight="@dimen/vs_20">
                             <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/mn_ijk_cache_play"
-                                    android:textColor="@android:color/white"
-                                    android:textSize="@dimen/ts_24" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/mn_ijk_cache_play"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
+
                             <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1" />
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
                             <TextView
-                                    android:id="@+id/tvIjkCachePlay"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@android:color/white"
-                                    android:textSize="@dimen/ts_24" />
+                                android:id="@+id/tvIjkCachePlay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
+
                             <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/vs_10"
-                                    android:layout_marginLeft="@dimen/vs_10"
-                                    android:text=">"
-                                    android:textColor="@android:color/white"
-                                    android:textSize="@dimen/ts_24" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/vs_10"
+                                android:layout_marginLeft="@dimen/vs_10"
+                                android:text=">"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -1215,7 +1249,7 @@
                             android:text=">"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
-                    </LinearLayout>                
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/llSearchView"
@@ -1491,13 +1525,13 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1" />
-                                
+
                             <TextView
-	                            android:id="@+id/showFastSearchText"
-	                            android:layout_width="wrap_content"
-	                            android:layout_height="wrap_content"
-	                            android:textColor="@android:color/white"
-	                            android:textSize="@dimen/ts_24" />    
+                                android:id="@+id/showFastSearchText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@android:color/white"
+                                android:textSize="@dimen/ts_24" />
 
                             <TextView
                                 android:layout_width="wrap_content"
