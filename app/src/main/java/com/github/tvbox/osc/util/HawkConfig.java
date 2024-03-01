@@ -11,6 +11,8 @@ public class HawkConfig {
     public static final String PUSH_TO_ADDR = "push_to_addr"; // 推送到地址的IP
     public static final String PUSH_TO_PORT = "push_to_port"; // 推送到地址的端口
     // URL Configurations
+    public static final String Multiline_Api_URL = "multiline_api_url";
+    public static final String Multiline_API_HISTORY = "multiline_api_history";
     public static final String API_URL = "api_url";
     public static final String API_HISTORY = "api_history";
     public static final String LIVE_URL = "live_url";
