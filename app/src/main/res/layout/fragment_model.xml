@@ -148,7 +148,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="middle"
                             android:singleLine="true"
-                            android:text="该功能未启用"
+                            android:text="点击设置"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/ts_24" />
                     </LinearLayout>
@@ -241,7 +241,8 @@
                             android:focusable="true"
                             android:gravity="center"
                             android:orientation="horizontal"
-                            android:padding="@dimen/vs_10">
+                            android:padding="@dimen/vs_10"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:layout_width="@dimen/vs_30"

@@ -155,8 +155,11 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 tvDebugOpen.setText(Hawk.get(HawkConfig.DEBUG_OPEN, false) ? "开启" : "关闭");
             }
         });
+
+
+
         // Input Source URL ------------------------------------------------------------------------
-        findViewById(R.id.llApi).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.llMultilineApi).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
@@ -176,6 +179,81 @@ public class ModelSettingFragment extends BaseLazyFragment {
                         EventBus.getDefault().unregister(dialog);
                     }
                 });
+                dialog.show();
+            }
+        });
+        findViewById(R.id.llMultilineApiHistory).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<String> history = Hawk.get(HawkConfig.Multiline_API_HISTORY, new ArrayList<String>());
+                if (history.isEmpty())
+                    return;
+                String current = Hawk.get(HawkConfig.Multiline_Api_URL, "");
+                int idx = 0;
+                if (history.contains(current))
+                    idx = history.indexOf(current);
+                ApiHistoryDialog dialog = new ApiHistoryDialog(getContext());
+                dialog.setTip(getString(R.string.dia_history_list));
+                dialog.setAdapter(new ApiHistoryDialogAdapter.SelectDialogInterface() {
+                    @Override
+                    public void click(String api) {
+                        Hawk.put(HawkConfig.API_URL, api);
+                        tvApi.setText(api);
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void del(String value, ArrayList<String> data) {
+                        Hawk.put(HawkConfig.API_HISTORY, data);
+                    }
+                }, history, idx);
+                dialog.show();
+            }
+        });
+
+        findViewById(R.id.llApi).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                FastClickCheckUtil.check(v);
+//                ApiDialog dialog = new ApiDialog(mActivity);
+//                EventBus.getDefault().register(dialog);
+//                dialog.setOnListener(new ApiDialog.OnListener() {
+//                    @Override
+//                    public void onchange(String api) {
+//                        Hawk.put(HawkConfig.API_URL, api);
+//                        tvApi.setText(api);
+//                    }
+//                });
+//                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                    @Override
+//                    public void onDismiss(DialogInterface dialog) {
+//                        ((BaseActivity) mActivity).hideSystemUI(true);
+//                        EventBus.getDefault().unregister(dialog);
+//                    }
+//                });
+//                dialog.show();
+                ArrayList<String> history = Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
+                if (history.isEmpty())
+                    return;
+                String current = Hawk.get(HawkConfig.API_URL, "");
+                int idx = 0;
+                if (history.contains(current))
+                    idx = history.indexOf(current);
+                ApiHistoryDialog dialog = new ApiHistoryDialog(getContext());
+                dialog.setTip(getString(R.string.sel_line));
+                dialog.setAdapter(new ApiHistoryDialogAdapter.SelectDialogInterface() {
+                    @Override
+                    public void click(String api) {
+                        Hawk.put(HawkConfig.API_URL, api);
+                        tvApi.setText(api);
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void del(String value, ArrayList<String> data) {
+                        Hawk.put(HawkConfig.API_HISTORY, data);
+                    }
+                }, history, idx);
                 dialog.show();
             }
         });
@@ -269,29 +347,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 tvHomeShow.setText(Hawk.get(HawkConfig.HOME_SHOW_SOURCE, true) ? "开启" : "关闭");
             }
         });
-        findViewById(R.id.llMultilineApi).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FastClickCheckUtil.check(v);
-                ApiDialog dialog = new ApiDialog(mActivity);
-                EventBus.getDefault().register(dialog);
-                dialog.setOnListener(new ApiDialog.OnListener() {
-                    @Override
-                    public void onchange(String api) {
-                        Hawk.put(HawkConfig.API_URL, api);
-                        tvApi.setText(api);
-                    }
-                });
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        ((BaseActivity) mActivity).hideSystemUI(true);
-                        EventBus.getDefault().unregister(dialog);
-                    }
-                });
-                dialog.show();
-            }
-        });
+
         // Select Home Display Type : Douban / Recommended / History -----
         findViewById(R.id.llHomeRec).setOnClickListener(new View.OnClickListener() {
             @Override

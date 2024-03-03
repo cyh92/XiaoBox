@@ -50,6 +50,7 @@
     // Settings Menu Page //
     <string name="ml_config">Multiline Settings</string>
     <string name="mn_config">Lines Address</string>
+    <string name="sel_line">Select Line</string>
     <string name="mn_home">Source</string>
     <string name="mn_home_show">Show Source</string>
     <string name="mn_home_type">Type</string>

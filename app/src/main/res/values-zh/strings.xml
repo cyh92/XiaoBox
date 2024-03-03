@@ -50,6 +50,7 @@
     // Settings Menu Page //
     <string name="ml_config">配置地址</string>
     <string name="mn_config">线路切换</string>
+    <string name="sel_line">选择线路</string>
     <string name="mn_home">数据源</string>
     <string name="mn_home_show">数据源显示</string>
     <string name="mn_home_type">推荐</string>
