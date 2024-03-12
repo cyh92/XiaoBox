@@ -31,24 +31,16 @@ android {
     }
 
     buildTypes {
-        debug {
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            minifyEnabled false
-
-            ndk {
-                abiFilters 'armeabi-v7a', 'arm64_v8a'
-            }
-        }
         release {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             minifyEnabled true
             android.applicationVariants.all { variant ->
                 variant.outputs.all {
-                    outputFileName = "tvbox_".concat(buildTime())+".apk"
+                    outputFileName = "XiaoVideo_".concat(buildTime())+".apk"
                 }
             }
             ndk {
-                abiFilters 'armeabi-v7a','arm64_v8a'
+                abiFilters 'armeabi-v7a'
             }
         }
     }
@@ -62,9 +54,13 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
-    
+
     buildFeatures {
         dataBinding = true
+    }
+
+    lint {
+        disable 'UnsafeOptInUsageError'
     }
 }
 
@@ -119,6 +115,7 @@ dependencies {
     implementation "androidx.media3:media3-exoplayer-hls:1.1.1"
     implementation "androidx.media3:media3-exoplayer-rtsp:1.1.1"
     implementation "androidx.media3:media3-datasource-rtmp:1.1.1"
+    implementation 'androidx.media3:media3-common:1.1.1'
 
     implementation "com.aliyun.sdk.android:AliyunPlayer:5.5.1.0-full"
     implementation 'com.alivc.conan:AlivcConan:0.9.5'
