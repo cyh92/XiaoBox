@@ -48,6 +48,7 @@
     <string name="det_desc">intro</string>
 
     // Settings Menu Page //
+    <string name="mn_line">Line Settings</string>
     <string name="ml_config">Multiline Settings</string>
     <string name="mn_config">Lines Address</string>
     <string name="sel_line">Select Line</string>

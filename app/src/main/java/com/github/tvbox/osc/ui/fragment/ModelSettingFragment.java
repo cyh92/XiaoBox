@@ -25,6 +25,7 @@ import com.github.tvbox.osc.ui.dialog.AboutDialog;
 import com.github.tvbox.osc.ui.dialog.ApiDialog;
 import com.github.tvbox.osc.ui.dialog.ApiHistoryDialog;
 import com.github.tvbox.osc.ui.dialog.BackupDialog;
+import com.github.tvbox.osc.ui.dialog.MultiLineApiDialog;
 import com.github.tvbox.osc.ui.dialog.SelectDialog;
 import com.github.tvbox.osc.ui.dialog.ResetDialog;
 import com.github.tvbox.osc.ui.dialog.XWalkInitDialog;
@@ -58,7 +59,6 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * @description:
  */
 public class ModelSettingFragment extends BaseLazyFragment {
-    private TextView MultilineApi;
     private TextView tvDebugOpen;
     private TextView tvApi;
     // Home Section
@@ -142,7 +142,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
         tvDns = findViewById(R.id.tvDns);
         tvDns.setText(OkGoHelper.dnsHttpsList.get(Hawk.get(HawkConfig.DOH_URL, 0)));
 		tvHomeDefaultShow = findViewById(R.id.tvHomeDefaultShow);
-        tvHomeDefaultShow.setText(Hawk.get(HawkConfig.HOME_DEFAULT_SHOW, false) ? "开启" : "关闭");
+        tvHomeDefaultShow.setText(Hawk.get(HawkConfig.HOME_DEFAULT_SHOW, false) ? "直播" : "点播");
 
         //takagen99 : Set HomeApi as default
         findViewById(R.id.llHomeApi).requestFocus();
@@ -159,7 +159,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
 
 
         // Input Source URL ------------------------------------------------------------------------
-        findViewById(R.id.llMultilineApi).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.llLineApi).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
@@ -182,31 +182,27 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 dialog.show();
             }
         });
-        findViewById(R.id.llMultilineApiHistory).setOnClickListener(new View.OnClickListener() {
+
+        findViewById(R.id.llMultilineApi).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> history = Hawk.get(HawkConfig.Multiline_API_HISTORY, new ArrayList<String>());
-                if (history.isEmpty())
-                    return;
-                String current = Hawk.get(HawkConfig.Multiline_Api_URL, "");
-                int idx = 0;
-                if (history.contains(current))
-                    idx = history.indexOf(current);
-                ApiHistoryDialog dialog = new ApiHistoryDialog(getContext());
-                dialog.setTip(getString(R.string.dia_history_list));
-                dialog.setAdapter(new ApiHistoryDialogAdapter.SelectDialogInterface() {
+                FastClickCheckUtil.check(v);
+                MultiLineApiDialog dialog = new MultiLineApiDialog(mActivity);
+                EventBus.getDefault().register(dialog);
+                dialog.setOnListener(new MultiLineApiDialog.OnListener() {
                     @Override
-                    public void click(String api) {
+                    public void onchange(String api) {
                         Hawk.put(HawkConfig.API_URL, api);
                         tvApi.setText(api);
-                        dialog.dismiss();
                     }
-
+                });
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
-                    public void del(String value, ArrayList<String> data) {
-                        Hawk.put(HawkConfig.API_HISTORY, data);
+                    public void onDismiss(DialogInterface dialog) {
+                        ((BaseActivity) mActivity).hideSystemUI(true);
+                        EventBus.getDefault().unregister(dialog);
                     }
-                }, history, idx);
+                });
                 dialog.show();
             }
         });
@@ -257,34 +253,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 dialog.show();
             }
         });
-        findViewById(R.id.llApiHistory).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<String> history = Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
-                if (history.isEmpty())
-                    return;
-                String current = Hawk.get(HawkConfig.API_URL, "");
-                int idx = 0;
-                if (history.contains(current))
-                    idx = history.indexOf(current);
-                ApiHistoryDialog dialog = new ApiHistoryDialog(getContext());
-                dialog.setTip(getString(R.string.dia_history_list));
-                dialog.setAdapter(new ApiHistoryDialogAdapter.SelectDialogInterface() {
-                    @Override
-                    public void click(String api) {
-                        Hawk.put(HawkConfig.API_URL, api);
-                        tvApi.setText(api);
-                        dialog.dismiss();
-                    }
 
-                    @Override
-                    public void del(String value, ArrayList<String> data) {
-                        Hawk.put(HawkConfig.API_HISTORY, data);
-                    }
-                }, history, idx);
-                dialog.show();
-            }
-        });
         // 1. HOME Configuration ---------------------------------------------------------------- //
         // Select Home Source ------------------------------------
         findViewById(R.id.llHomeApi).setOnClickListener(new View.OnClickListener() {
@@ -913,7 +882,7 @@ public class ModelSettingFragment extends BaseLazyFragment {
             public void onClick(View v) {
                 FastClickCheckUtil.check(v);
                 Hawk.put(HawkConfig.HOME_DEFAULT_SHOW, !Hawk.get(HawkConfig.HOME_DEFAULT_SHOW, false));
-                tvHomeDefaultShow.setText(Hawk.get(HawkConfig.HOME_DEFAULT_SHOW, true) ? "开启" : "关闭");
+                tvHomeDefaultShow.setText(Hawk.get(HawkConfig.HOME_DEFAULT_SHOW, true) ? "直播" : "点播");
             }
         });
 
