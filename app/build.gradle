@@ -36,7 +36,7 @@ android {
             minifyEnabled true
             android.applicationVariants.all { variant ->
                 variant.outputs.all {
-                    outputFileName = "XiaoVideo_".concat(buildTime())+".apk"
+                    outputFileName = "XiaoBox_".concat(buildTime())+".apk"
                 }
             }
             ndk {
