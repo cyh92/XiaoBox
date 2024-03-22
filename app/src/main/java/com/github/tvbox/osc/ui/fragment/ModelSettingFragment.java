@@ -17,6 +17,7 @@ import com.github.tvbox.osc.api.ApiConfig;
 import com.github.tvbox.osc.base.BaseActivity;
 import com.github.tvbox.osc.base.BaseLazyFragment;
 import com.github.tvbox.osc.bean.IJKCode;
+import com.github.tvbox.osc.bean.MultilineBean;
 import com.github.tvbox.osc.bean.SourceBean;
 import com.github.tvbox.osc.ui.activity.SettingActivity;
 import com.github.tvbox.osc.ui.adapter.ApiHistoryDialogAdapter;
@@ -191,9 +192,9 @@ public class ModelSettingFragment extends BaseLazyFragment {
                 EventBus.getDefault().register(dialog);
                 dialog.setOnListener(new MultiLineApiDialog.OnListener() {
                     @Override
-                    public void onchange(String api) {
-                        Hawk.put(HawkConfig.API_URL, api);
-                        tvApi.setText(api);
+                    public void onchange(MultilineBean api) {
+                        Hawk.put(HawkConfig.Multiline_Api_URL, api.getUrl());
+//                        tvApi.setText(api);
                     }
                 });
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {

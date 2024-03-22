@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.github.tvbox.osc.R;
+import com.github.tvbox.osc.api.ApiConfig;
+import com.github.tvbox.osc.bean.MultilineBean;
 import com.github.tvbox.osc.event.RefreshEvent;
 import com.github.tvbox.osc.server.ControlManager;
 import com.github.tvbox.osc.ui.activity.HomeActivity;
@@ -28,6 +30,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import me.jessyan.autosize.utils.AutoSizeUtils;
 
@@ -38,10 +42,10 @@ import me.jessyan.autosize.utils.AutoSizeUtils;
  * @since 2020/12/27
  */
 public class MultiLineApiDialog extends BaseDialog {
-    private final ImageView ivQRCode;
-    private final TextView tvAddress;
+    private final ImageView ipQRCode;
+    private final TextView ipAddress;
     private final EditText inputApi;
-    private final EditText inputLive;
+    private final EditText inputName;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refresh(RefreshEvent event) {
@@ -49,7 +53,7 @@ public class MultiLineApiDialog extends BaseDialog {
             inputApi.setText((String) event.obj);
         }
         if (event.type == RefreshEvent.TYPE_LIVE_URL_CHANGE) {
-            inputLive.setText((String) event.obj);
+            inputName.setText((String) event.obj);
         }
     }
 
@@ -57,102 +61,111 @@ public class MultiLineApiDialog extends BaseDialog {
         super(context);
         setContentView(R.layout.dialog_multi_line_api);
         setCanceledOnTouchOutside(true);
-        ivQRCode = findViewById(R.id.ivQRCode);
-        tvAddress = findViewById(R.id.tvAddress);
-        inputApi = findViewById(R.id.input);
-        inputApi.setText(Hawk.get(HawkConfig.API_URL, ""));
+        ipQRCode = findViewById(R.id.ipQRCode);
+        ipAddress = findViewById(R.id.ipAddress);
+        inputApi = findViewById(R.id.input_api);
+        inputName = findViewById(R.id.inputName);
+        inputApi.setText(Hawk.get(HawkConfig.Multiline_Api_URL, ""));
+        ArrayList<MultilineBean> history = Hawk.get(HawkConfig.Multiline_API_HISTORY, new ArrayList<MultilineBean>());
 
-        // takagen99: Add Live & EPG Address
-        inputLive = findViewById(R.id.input_live);
-        inputLive.setText(Hawk.get(HawkConfig.LIVE_URL, ""));
+        for(MultilineBean mb:history){
+            String n=mb.getUrl();
+            String a=Hawk.get(HawkConfig.Multiline_Api_URL, "");
+            if(n.equalsIgnoreCase(a)){
+                inputName.setText(mb.getName());
+            }
+
+        }
+
 
         findViewById(R.id.inputSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String newName = inputName.getText().toString().trim();
                 String newApi = inputApi.getText().toString().trim();
-                String newLive = inputLive.getText().toString().trim();
-                // takagen99: Convert all to clan://localhost format
-                if (newApi.startsWith("file://")) {
-                    newApi = newApi.replace("file://", "clan://localhost/");
-                } else if (newApi.startsWith("./")) {
-                    newApi = newApi.replace("./", "clan://localhost/");
+                MultilineBean bean=new MultilineBean();
+
+                if(newName.isEmpty()){
+                    newName=newApi;
                 }
                 if (!newApi.isEmpty()) {
-                    ArrayList<String> history = Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
-                    if (!history.contains(newApi))
-                        history.add(0, newApi);
-                    if (history.size() > 20)
-                        history.remove(20);
-                    Hawk.put(HawkConfig.API_HISTORY, history);
-                    listener.onchange(newApi);
+                    bean.setName(newName);
+                    if(history.isEmpty()){
+                        bean.setUrl(newApi);
+                    }else {
+                        for (MultilineBean m : history) {
+                            if (!m.getUrl().equalsIgnoreCase(newApi)) {
+                                bean.setUrl(newApi);
+                            }else {
+                                history.remove(history.indexOf(m));
+                                bean.setUrl(m.getUrl());
+                            }
+                        }
+                    }
+                    history.add(bean);
+
+                    Hawk.put(HawkConfig.Multiline_API_HISTORY, history);
+                    ApiConfig.get().setMultiUrl(newApi);
+                    listener.onchange(bean);
                     dismiss();
                 }
                 // Capture Live input into Settings & Live History (max 20)
-                Hawk.put(HawkConfig.LIVE_URL, newLive);
-                if (!newLive.isEmpty()) {
-                    ArrayList<String> liveHistory = Hawk.get(HawkConfig.LIVE_HISTORY, new ArrayList<String>());
-                    if (!liveHistory.contains(newLive))
-                        liveHistory.add(0, newLive);
-                    if (liveHistory.size() > 20)
-                        liveHistory.remove(20);
-                    Hawk.put(HawkConfig.LIVE_HISTORY, liveHistory);
-                }
+//                Hawk.put(HawkConfig.LIVE_URL, newLive);
+//                if (!newLive.isEmpty()) {
+//                    ArrayList<String> liveHistory = Hawk.get(HawkConfig.LIVE_HISTORY, new ArrayList<String>());
+//                    if (!liveHistory.contains(newLive))
+//                        liveHistory.add(0, newLive);
+//                    if (liveHistory.size() > 20)
+//                        liveHistory.remove(20);
+//                    Hawk.put(HawkConfig.LIVE_HISTORY, liveHistory);
+//                }
 
             }
         });
-        findViewById(R.id.apiHistory).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.multi_apiHistory).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> history = Hawk.get(HawkConfig.API_HISTORY, new ArrayList<String>());
                 if (history.isEmpty())
                     return;
-                String current = Hawk.get(HawkConfig.API_URL, "");
+                String current = Hawk.get(HawkConfig.Multiline_Api_URL, "");
+
+                ArrayList<String> list=new ArrayList<String>();
                 int idx = 0;
-                if (history.contains(current))
-                    idx = history.indexOf(current);
+
+                for(MultilineBean m:history){
+                    if(m.getUrl().equals(current)){
+                        idx++;
+                    }
+                    list.add(m.getUrl());
+                }
+
+//                if (history.contains(current))
+//                    idx = history.indexOf(current);
                 ApiHistoryDialog dialog = new ApiHistoryDialog(getContext());
-                dialog.setTip(HomeActivity.getRes().getString(R.string.dia_history_list));
+                dialog.setTip("多仓配置历史");
                 dialog.setAdapter(new ApiHistoryDialogAdapter.SelectDialogInterface() {
                     @Override
                     public void click(String value) {
                         inputApi.setText(value);
-                        listener.onchange(value);
+                        String name=value;
+                        for(MultilineBean m:history){
+                            if(m.getUrl().equalsIgnoreCase(value)){
+                                name=m.getName();
+                            }
+                        }
+                        MultilineBean b=new MultilineBean();
+                        b.setName(name);
+                        b.setUrl(value);
+//                        ApiConfig.get().setMultiUrl(value);
+                        listener.onchange(b);
                         dialog.dismiss();
                     }
 
                     @Override
                     public void del(String value, ArrayList<String> data) {
-                        Hawk.put(HawkConfig.API_HISTORY, data);
+                        Hawk.put(HawkConfig.Multiline_API_HISTORY, data);
                     }
-                }, history, idx);
-                dialog.show();
-            }
-        });
-        findViewById(R.id.liveHistory).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<String> liveHistory = Hawk.get(HawkConfig.LIVE_HISTORY, new ArrayList<String>());
-                if (liveHistory.isEmpty())
-                    return;
-                String current = Hawk.get(HawkConfig.LIVE_URL, "");
-                int idx = 0;
-                if (liveHistory.contains(current))
-                    idx = liveHistory.indexOf(current);
-                ApiHistoryDialog dialog = new ApiHistoryDialog(getContext());
-                dialog.setTip(HomeActivity.getRes().getString(R.string.dia_history_live));
-                dialog.setAdapter(new ApiHistoryDialogAdapter.SelectDialogInterface() {
-                    @Override
-                    public void click(String liveURL) {
-                        inputLive.setText(liveURL);
-                        Hawk.put(HawkConfig.LIVE_URL, liveURL);
-                        dialog.dismiss();
-                    }
-
-                    @Override
-                    public void del(String value, ArrayList<String> data) {
-                        Hawk.put(HawkConfig.LIVE_HISTORY, data);
-                    }
-                }, liveHistory, idx);
+                }, list, idx);
                 dialog.show();
             }
         });
@@ -162,8 +175,8 @@ public class MultiLineApiDialog extends BaseDialog {
 
     private void refreshQRCode() {
         String address = ControlManager.get().getAddress(false);
-        tvAddress.setText(String.format("手机/电脑扫描上方二维码或者直接浏览器访问地址\n%s", address));
-        ivQRCode.setImageBitmap(QRCodeGen.generateBitmap(address, AutoSizeUtils.mm2px(getContext(), 300), AutoSizeUtils.mm2px(getContext(), 300)));
+        ipAddress.setText(String.format("手机/电脑扫描上方二维码或者直接浏览器访问地址\n%s", address));
+        ipQRCode.setImageBitmap(QRCodeGen.generateBitmap(address, AutoSizeUtils.mm2px(getContext(), 300), AutoSizeUtils.mm2px(getContext(), 300)));
     }
 
     public void setOnListener(OnListener listener) {
@@ -173,6 +186,6 @@ public class MultiLineApiDialog extends BaseDialog {
     OnListener listener = null;
 
     public interface OnListener {
-        void onchange(String api);
+        void onchange(MultilineBean api);
     }
 }

@@ -13,7 +13,7 @@
         android:padding="@dimen/vs_30">
 
         <ImageView
-            android:id="@+id/ivQRCode"
+            android:id="@+id/ipQRCode"
             android:layout_width="@dimen/vs_260"
             android:layout_height="@dimen/vs_260"
             android:layout_gravity="center"
@@ -26,7 +26,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvAddress"
+                android:id="@+id/ipAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/vs_10"
@@ -54,7 +54,6 @@
                     android:padding="@dimen/vs_5">
 
                     <LinearLayout
-                        android:id="@+id/ll_apiHistory"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="@dimen/vs_5"
@@ -62,7 +61,7 @@
                         android:orientation="horizontal">
 
                         <EditText
-                            android:id="@+id/input"
+                            android:id="@+id/inputName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -83,7 +82,6 @@
                             android:textSize="@dimen/ts_22" />
 
                         <LinearLayout
-                            android:id="@+id/apiHistory"
                             android:layout_width="@dimen/vs_80"
                             android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/vs_5"
@@ -98,13 +96,12 @@
                                 android:layout_width="@dimen/vs_30"
                                 android:layout_height="@dimen/vs_30"
                                 android:focusable="true"
-                                android:src="@drawable/hm_history" />
+                                android:src="@drawable/icon_delete" />
                         </LinearLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/ll_liveHistory"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="@dimen/vs_5"
@@ -112,7 +109,7 @@
                         android:orientation="horizontal">
 
                         <EditText
-                            android:id="@+id/input_live"
+                            android:id="@+id/input_api"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -133,7 +130,7 @@
                             android:textSize="@dimen/ts_22" />
 
                         <LinearLayout
-                            android:id="@+id/liveHistory"
+                            android:id="@+id/multi_apiHistory"
                             android:layout_width="@dimen/vs_80"
                             android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/vs_5"

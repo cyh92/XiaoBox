@@ -13,6 +13,7 @@ import com.github.tvbox.osc.base.App;
 import com.github.tvbox.osc.bean.IJKCode;
 import com.github.tvbox.osc.bean.LiveChannelGroup;
 import com.github.tvbox.osc.bean.LiveChannelItem;
+import com.github.tvbox.osc.bean.MultilineBean;
 import com.github.tvbox.osc.bean.ParseBean;
 import com.github.tvbox.osc.bean.SourceBean;
 import com.github.tvbox.osc.server.ControlManager;
@@ -129,6 +130,39 @@ public class ApiConfig {
         return "".getBytes();
     }
 
+    public void setMultiUrl(String apiUrl){
+        if (apiUrl.isEmpty()) {
+            return;
+        }
+        OkGo.<String>get(apiUrl)
+                .headers("User-Agent", userAgent)
+                .headers("Accept", requestAccept)
+                .execute(new AbsCallback<String>() {
+                    @Override
+                    public String convertResponse(okhttp3.Response response) throws Throwable {
+
+                        return null;
+                    }
+
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        try {
+                            String json = response.body();
+                            JsonObject infoJson = new Gson().fromJson(json, JsonObject.class);
+                            for (JsonElement opt : infoJson.get("sites").getAsJsonArray()) {
+                               MultilineBean mb= new Gson().fromJson(opt, MultilineBean.class);
+                               ArrayList<String> history = Hawk.get(HawkConfig.API_HISTORY, new ArrayList<>());
+
+                                if (!history.contains(mb.getUrl()))
+                                    history.add(0, mb.getUrl());
+                            }
+
+                        } catch (Throwable th) {
+                            th.printStackTrace();
+                        }
+                    }
+                });
+    }
     public void loadConfig(boolean useCache, LoadConfigCallback callback, Activity activity) {
         // Embedded Source : Update in Strings.xml if required
         String apiUrl = Hawk.get(HawkConfig.API_URL, HomeActivity.getRes().getString(R.string.app_source));
