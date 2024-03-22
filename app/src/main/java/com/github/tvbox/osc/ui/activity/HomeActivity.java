@@ -86,6 +86,7 @@ public class HomeActivity extends BaseActivity {
     private TextView tvName;
     private ImageView tvFind;
     private ImageView tvStyle;
+    private ImageView tvHistory;
     private ImageView tvMenu;
     private TextView tvDate;
     private TvRecyclerView mGridView;
@@ -148,6 +149,7 @@ public class HomeActivity extends BaseActivity {
         this.tvName = findViewById(R.id.tvName);
         this.tvFind = findViewById(R.id.tvFind);
         this.tvStyle = findViewById(R.id.tvStyle);
+        this.tvHistory = findViewById(R.id.tvHistory);
         this.tvMenu = findViewById(R.id.tvMenu);
         this.tvDate = findViewById(R.id.tvDate);
         this.contentLayout = findViewById(R.id.contentLayout);
@@ -286,6 +288,12 @@ public class HomeActivity extends BaseActivity {
         });
 
         // Button : Settings >> To go into Settings --------------------
+        tvHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jumpActivity(HistoryActivity.class);
+            }
+        });
         tvMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -742,6 +750,7 @@ public class HomeActivity extends BaseActivity {
             tvName.setFocusable(false);
             tvFind.setFocusable(false);
             tvStyle.setFocusable(false);
+            tvHistory.setFocusable(false);
             tvMenu.setFocusable(false);
             return;
         }
@@ -759,6 +768,7 @@ public class HomeActivity extends BaseActivity {
             tvName.setFocusable(true);
             tvFind.setFocusable(true);
             tvStyle.setFocusable(true);
+            tvHistory.setFocusable(true);
             tvMenu.setFocusable(true);
         }
     }
