@@ -21,19 +21,19 @@
             android:paddingLeft="@dimen/vs_20"
             android:paddingRight="@dimen/vs_20">
 
-            <com.owen.tvrecyclerview.widget.TvRecyclerView
-                android:id="@+id/bannerlist"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:padding="@dimen/vs_15"
-                app:tv_horizontalSpacingWithMargins="@dimen/vs_10"
-                app:tv_layoutManager="V7LinearLayoutManager"
-                app:tv_selectedItemIsCentered="true"
-                app:tv_verticalSpacingWithMargins="@dimen/vs_10"
-                android:nextFocusDown="@id/tvLive"/>
+<!--            <com.owen.tvrecyclerview.widget.TvRecyclerView-->
+<!--                android:id="@+id/bannerlist"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:clipChildren="false"-->
+<!--                android:clipToPadding="false"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:padding="@dimen/vs_15"-->
+<!--                app:tv_horizontalSpacingWithMargins="@dimen/vs_10"-->
+<!--                app:tv_layoutManager="V7LinearLayoutManager"-->
+<!--                app:tv_selectedItemIsCentered="true"-->
+<!--                app:tv_verticalSpacingWithMargins="@dimen/vs_10"-->
+<!--                android:nextFocusDown="@id/tvLive"/>-->
 
 
             <LinearLayout
@@ -45,9 +45,9 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/vs_5"
+                android:paddingLeft="@dimen/vs_40"
                 android:paddingTop="@dimen/vs_5"
-                android:paddingRight="@dimen/vs_5"
+                android:paddingRight="@dimen/vs_40"
                 android:paddingBottom="@dimen/vs_5">
 
                 <FrameLayout
@@ -348,7 +348,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/vs_5"
+                android:paddingLeft="@dimen/vs_10"
+                android:paddingRight="@dimen/vs_10"
                 android:text="为你推荐"
                 android:textColor="@color/color_FFFFFF"
                 android:textSize="@dimen/ts_34" />
@@ -361,9 +362,9 @@
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:descendantFocusability="afterDescendants"
-                android:paddingLeft="@dimen/vs_5"
+                android:paddingLeft="@dimen/vs_40"
                 android:paddingTop="@dimen/vs_10"
-                android:paddingRight="@dimen/vs_5"
+                android:paddingRight="@dimen/vs_40"
                 android:paddingBottom="@dimen/vs_10"
                 android:tag="tvHotListForGrid"
                 android:visibility="gone"
@@ -379,9 +380,9 @@
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/vs_5"
+                android:paddingLeft="@dimen/vs_40"
                 android:paddingTop="@dimen/vs_10"
-                android:paddingRight="@dimen/vs_5"
+                android:paddingRight="@dimen/vs_40"
                 android:paddingBottom="@dimen/vs_10"
                 android:tag="tvHotListForLine"
                 app:tv_horizontalSpacingWithMargins="@dimen/vs_10"

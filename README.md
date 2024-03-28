@@ -14,3 +14,5 @@
         putDefault(HawkConfig.SEARCH_VIEW, 2);    // Text or Picture
 
     }
+item_home_sore.xml  首页横向菜单列表
+fragment_grid.xml   首页资源列表
