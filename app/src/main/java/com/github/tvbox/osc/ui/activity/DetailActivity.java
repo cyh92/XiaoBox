@@ -422,8 +422,7 @@ public class DetailActivity extends BaseActivity {
                 //获取剪切板管理器
                 ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 //设置内容到剪切板
-//                cm.setPrimaryClip(ClipData.newPlainText(null, vodInfo.seriesMap.get(vodInfo.playFlag).get(0).url));
-                cm.setPrimaryClip(ClipData.newPlainText(null, vodInfo.seriesMap.get(vodInfo.playFlag).get(vodInfo.playIndex).url));
+                cm.setPrimaryClip(ClipData.newPlainText(null, vodInfo.seriesMap.get(vodInfo.playFlag).get(vodInfo.getplayIndex()).url));
                 Toast.makeText(DetailActivity.this, getString(R.string.det_url), Toast.LENGTH_SHORT).show();
             }
         });
@@ -603,7 +602,13 @@ public class DetailActivity extends BaseActivity {
                 vodInfo.playIndex = 0;
             }
             if (vodInfo.seriesMap.get(vodInfo.playFlag) != null) {
-                vodInfo.seriesMap.get(vodInfo.playFlag).get(this.vodInfo.getplayIndex()).selected = true;
+                int playIndex = this.vodInfo.getplayIndex();
+                if (vodInfo.seriesMap.get(vodInfo.playFlag).size() >= playIndex) {
+                    vodInfo.seriesMap.get(vodInfo.playFlag).get(playIndex).selected = true;
+                } else {
+                    // 到了这里说明当前选中的播放源总播放集数 小于 上次选中的播放源的总集数
+                    vodInfo.playGroup = 0;
+                }
             }
 
             List<VodInfo.VodSeries> list = vodInfo.seriesMap.get(vodInfo.playFlag);
@@ -651,6 +656,7 @@ public class DetailActivity extends BaseActivity {
                 }
             }, 100);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -700,6 +706,7 @@ public class DetailActivity extends BaseActivity {
                 uu.add(info);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return arrayList;
     }  
