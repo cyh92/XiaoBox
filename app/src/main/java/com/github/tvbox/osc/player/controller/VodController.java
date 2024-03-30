@@ -316,7 +316,7 @@ public class VodController extends BaseController {
         @Override
         public void run() {
             Date date = new Date();
-            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
+            SimpleDateFormat timeFormat = new SimpleDateFormat(HomeActivity.getRes().getString(R.string.hm_date2), Locale.ENGLISH);
             mPlayPauseTime.setText(timeFormat.format(date));
             mTime.setText(timeFormat.format(date));
             mHandler.postDelayed(this, 1000);
@@ -1128,7 +1128,7 @@ public class VodController extends BaseController {
         Calendar date = Calendar.getInstance();
         long t = date.getTimeInMillis();
         Date afterAdd = new Date(t + TimeRemaining);
-        SimpleDateFormat timeEnd = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);
+        SimpleDateFormat timeEnd = new SimpleDateFormat(HomeActivity.getRes().getString(R.string.hm_date2), Locale.ENGLISH);
         if (isPaused) {
             mTimeEnd.setText(getContext().getString(R.string.vod_remaining_time) + " " + PlayerUtils.stringForTime((int) TimeRemaining) + " | " + getContext().getString(R.string.vod_ends_at) + " " + timeEnd.format(afterAdd));
         } else {
@@ -1517,31 +1517,32 @@ public class VodController extends BaseController {
     // takagen99 : Added double tap to rewind or fast forward with animation
     @Override
     public boolean onDoubleTap(MotionEvent e) {
-        int threeScreen = PlayerUtils.getScreenWidth(getContext(), true) / 3;
-
-        if (e.getX() > 0 && e.getX() < threeScreen) {
-            // left side <<<<<
-            tapDirection = -1;
-        } else if ((e.getX() > threeScreen) && (e.getX() < (threeScreen * 2))) {
-            // middle screen
-            tapDirection = 0;
-        } else if (e.getX() > (threeScreen * 2)) {
-            // right side >>>>>
-            tapDirection = 1;
-        }
-        if (tapDirection == 0 || isPaused) {
-            togglePlay();
-        } else {
-            circularReveal(mTapSeek, tapDirection);
-            int duration = (int) mControlWrapper.getDuration();
-            int currentPosition = (int) mControlWrapper.getCurrentPosition();
-            // Fast Forward or Backward by 10 seconds
-            int position = (int) (10000.0f * tapDirection) + currentPosition;
-            if (position > duration) position = duration;
-            if (position < 0) position = 0;
-            updateSeekUI(currentPosition, position, duration);
-            mControlWrapper.seekTo(position);
-        }
+//        int threeScreen = PlayerUtils.getScreenWidth(getContext(), true) / 3;
+//
+//        if (e.getX() > 0 && e.getX() < threeScreen) {
+//            // left side <<<<<
+//            tapDirection = -1;
+//        } else if ((e.getX() > threeScreen) && (e.getX() < (threeScreen * 2))) {
+//            // middle screen
+//            tapDirection = 0;
+//        } else if (e.getX() > (threeScreen * 2)) {
+//            // right side >>>>>
+//            tapDirection = 1;
+//        }
+//        if (tapDirection == 0 || isPaused) {
+//            togglePlay();
+//        } else {
+//            circularReveal(mTapSeek, tapDirection);
+//            int duration = (int) mControlWrapper.getDuration();
+//            int currentPosition = (int) mControlWrapper.getCurrentPosition();
+//            // Fast Forward or Backward by 10 seconds
+//            int position = (int) (10000.0f * tapDirection) + currentPosition;
+//            if (position > duration) position = duration;
+//            if (position < 0) position = 0;
+//            updateSeekUI(currentPosition, position, duration);
+//            mControlWrapper.seekTo(position);
+//        }
+        togglePlay();
         return true;
     }
 
