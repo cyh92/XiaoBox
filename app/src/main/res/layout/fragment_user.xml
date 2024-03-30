@@ -50,7 +50,7 @@
 
                 <FrameLayout
                     android:id="@+id/tvLive"
-                    android:layout_width=".0dip"
+                    android:layout_width="0.0dip"
                     android:layout_height="fill_parent"
                     android:layout_margin="@dimen/vs_5"
                     android:layout_weight="1.0"
