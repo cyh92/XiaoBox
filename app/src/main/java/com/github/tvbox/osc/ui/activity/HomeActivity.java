@@ -256,7 +256,6 @@ public class HomeActivity extends BaseActivity {
                 return true;
             }
         });
-        // Button : Wifi >> Go into Android Wifi Settings -------------
 
         // Button : Search --------------------------------------------
         tvFind.setOnClickListener(new View.OnClickListener() {
