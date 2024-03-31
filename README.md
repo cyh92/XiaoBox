@@ -16,3 +16,4 @@
     }
 item_home_sore.xml  首页横向菜单列表
 fragment_grid.xml   首页资源列表
+item_user_hot_vod.xml 首页推荐列表
