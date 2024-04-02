@@ -39,7 +39,7 @@
             <LinearLayout
                 android:id="@+id/tvUserHome"
                 android:layout_width="fill_parent"
-                android:layout_height="@dimen/vs_160"
+                android:layout_height="@dimen/vs_180"
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:focusable="false"
